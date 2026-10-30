@@ -29,6 +29,7 @@ void menu_registro()
 
 }
 Usuario crear_usuario(){
+    Usuario a;
     //---------------------------------//
 
     //--------------------------//
@@ -52,7 +53,7 @@ Usuario crear_usuario(){
     }while(corroborrar_string_repetido(usuarios,validos,email)!=0);
     //----------------------------------//
 
-
+    return a;
 }
 int corroborrar_string_repetido(Usuario a[], int validos, char string_ingresado[])
 {
