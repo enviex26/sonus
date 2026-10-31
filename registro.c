@@ -40,7 +40,7 @@ Usuario crear_usuario(){
     do{
     printf("Ingrese su contrasenia: ");
     scanf("%s", contrasenia);
-    }while(corroborar_contrasenia(contrasenia)==1)
+    }while(corroborar_contrasenia(contrasenia)!=0)
     //----------------------------------//
     do{
     printf("Ingrese el nickname: ");
@@ -52,6 +52,9 @@ Usuario crear_usuario(){
     scanf("%s", email);
     }while(corroborrar_string_repetido(usuarios,validos,email)!=0);
     //----------------------------------//
+    printf("Cargado correctamente!\n");
+    printf("Su ID es: %d",generar_ID);
+    scanf("")
 
     return a;
 }
@@ -61,7 +64,16 @@ int corroborrar_string_repetido(Usuario a[], int validos, char string_ingresado[
 
     for(int i=0;i<validos;i++)
         {
-        if(strcmp(usuarios[i].,Id_ingresado)==0)
+        if(strcmp(usuarios[i].email,string_ingresado)==0)
+            repetido=1;
+        }
+
+        if(repetido==1)
+        printf("El campo ingresado ya existe");
+
+        for(int i=0;i<validos;i++)
+        {
+        if(strcmp(usuarios[i].nickname,string_ingresado)==0)
             repetido=1;
         }
 
