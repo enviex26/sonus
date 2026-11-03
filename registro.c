@@ -58,6 +58,10 @@ Usuario crear_usuario(){
 
     return a;
 }
+int generar_ID()
+{
+    srand
+}
 int corroborrar_string_repetido(Usuario a[], int validos, char string_ingresado[])
 {
     repetido=0;
