@@ -17,7 +17,7 @@ void menu_registro()
         switch (opcion)
         {
         case 0:
-            return 0;
+            return;
 
         case 1:
             crear_usuario();
@@ -28,13 +28,21 @@ void menu_registro()
     }
 
 }
-Usuario crear_usuario(){
-    Usuario a;
-    //---------------------------------//
+Usuario* cargar_arregloDin(usuarios,&capacidad,&validos);
+{
 
+
+
+}
+
+Usuario crear_usuario()
+{
+    Usuario a;
     //--------------------------//
-    printf("Ingrese el nombre: ");
-    fgets(nombre,50,stdin);
+    do{
+    printf("Ingrese el nickname: ");
+    scanf("%s", a.nickname);
+    }while(corroborrar_string_repetido(usuarios,validos,nickname)!=0);
     while(getchar()!='\n');
     //----------------------------//
     do{
@@ -43,25 +51,21 @@ Usuario crear_usuario(){
     }while(corroborar_contrasenia(contrasenia)!=0)
     //----------------------------------//
     do{
-    printf("Ingrese el nickname: ");
-    scanf("%s", nickname);
-    }while(corroborrar_string_repetido(usuarios,validos,nickname)!=0);
-    //----------------------------------//
-    do{
     printf("Ingrese su mail: ");
     scanf("%s", email);
     }while(corroborrar_string_repetido(usuarios,validos,email)!=0);
     //----------------------------------//
     printf("Cargado correctamente!\n");
     printf("Su ID es: %d",generar_ID);
-    scanf("")
 
     return a;
 }
 int generar_ID()
 {
-    srand
+  int ID = 00000;
+  return ID++;
 }
+
 int corroborrar_string_repetido(Usuario a[], int validos, char string_ingresado[])
 {
     repetido=0;

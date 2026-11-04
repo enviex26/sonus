@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1793813653 source:/Users/mateoymargui/Documents/GitHub/sonus/main.c
+	<stdio.h>
+	<stdlib.h>
+	"registro.h"
+
+1793813583 /Users/mateoymargui/Documents/GitHub/sonus/registro.h
+
