@@ -6,3 +6,28 @@
 
 1793813583 /Users/mateoymargui/Documents/GitHub/sonus/registro.h
 
+1793844812 source:/Users/novex/Documents/sonus/main.c
+	<stdio.h>
+	<stdlib.h>
+	"registro.h"
+	"login.h"
+
+1793844812 /Users/novex/Documents/sonus/registro.h
+
+1793844831 source:/Users/novex/Documents/sonus/login.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"login.h"
+	"registro.h"
+
+1793843093 /Users/novex/Documents/sonus/login.h
+	"registro.h"
+
+1793844823 source:/Users/novex/Documents/sonus/registro.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"registro.h"
+

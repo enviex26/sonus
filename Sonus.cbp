@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/TP_Programacion(Mateo,Gonzalo,Tomas,Ramiro)" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/Sonus" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -16,7 +16,7 @@
 				</Compiler>
 			</Target>
 			<Target title="Release">
-				<Option output="bin/Release/TP_Programacion(Mateo,Gonzalo,Tomas,Ramiro)" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/Sonus" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -37,7 +37,11 @@
 		<Unit filename="registro.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="login.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="registro.h" />
+		<Unit filename="login.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

@@ -1,14 +1,15 @@
 #ifndef REGISTRO_H_INCLUDED
 #define REGISTRO_H_INCLUDED
 typedef struct stArtista {
-    int IdArtista;
+    int IdArtista; // ID unico
     char nombre[50]; // Nombre publico del Artista
     char contrasenia[20]; // Para el login
     char generoPrincipal[30];
+    char nickname[30];
 } Artista;
 
 typedef struct stUsuario {
-    int idUsuario; // ID de cliente œnico
+    int idUsuario; // ID de cliente unico
     char email[50];
     char contrasenia[20]; // Para el login
     char nickname[30];
@@ -17,8 +18,11 @@ typedef struct stUsuario {
 int corroborar_contrasenia(char c[], int dim);
 int corroborrar_string_repetido(Usuario a[], int validos, char string_ingresado[]);
 int generar_ID();
-Usuario crear_usuario();
+Usuario crear_usuario(Usuario *usuarios, int validos);
+Usuario* cargar_arregloDin(Usuario *usuarios,int *capacidad,int *validos);
 void menu_registro();
+void dumpearUsuariosABin(char *filename, Usuario *user);
+void bufferError(FILE *file);
 
 
 #endif // REGISTRO_H_INCLUDED

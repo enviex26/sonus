@@ -1,0 +1,8 @@
+.cache/Clangd-cache.lock
+compile_commands.json
+/obj
+/obj
+obj/Debug/main.o
+/obj/Debug
+/bin
+/obj
