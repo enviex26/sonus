@@ -26,11 +26,11 @@ void menu_registro()
 
         }
 
-        printf("Que tipo de usuario desea registrar\n");
-        printf("0. Salir\n");
-        printf("1. Usuario\n");
-        printf("2. Artista\n");
-        scanf("%d", &option);
+//        printf("Que tipo de usuario desea registrar\n");
+//        printf("0. Salir\n");
+//        printf("1. Usuario\n");
+//        printf("2. Artista\n");
+//        scanf("%d", &option);
     }
 
 }
