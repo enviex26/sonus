@@ -18,8 +18,8 @@ typedef struct stUsuario {
 int corroborar_contrasenia(char c[], int dim);
 int corroborrar_string_repetido(Usuario a[], int validos, char string_ingresado[]);
 int generar_ID();
-Usuario crear_usuario(Usuario *usuarios, int validos);
-Usuario* cargar_arregloDin(Usuario *usuarios,int *capacidad,int *validos);
+void crear_usuario(Usuario usuarios[], int *validos);
+Usuario* crear_arreglo_din(int capacidad);
 void menu_registro();
 void dumpearUsuariosABin(char *filename, Usuario *user);
 void bufferError(FILE *file);

@@ -1,10 +1,11 @@
 # depslib dependency file v1.0
-1793813653 source:/Users/mateoymargui/Documents/GitHub/sonus/main.c
+1794003666 source:/Users/mateoymargui/Documents/GitHub/sonus/main.c
 	<stdio.h>
 	<stdlib.h>
 	"registro.h"
+	"login.h"
 
-1793813583 /Users/mateoymargui/Documents/GitHub/sonus/registro.h
+1794003710 /Users/mateoymargui/Documents/GitHub/sonus/registro.h
 
 1793844812 source:/Users/novex/Documents/sonus/main.c
 	<stdio.h>
@@ -29,5 +30,15 @@
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
+	"registro.h"
+
+1793930202 /Users/mateoymargui/Documents/GitHub/sonus/login.h
+	"registro.h"
+
+1793930202 source:/Users/mateoymargui/Documents/GitHub/sonus/login.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"login.h"
 	"registro.h"
 

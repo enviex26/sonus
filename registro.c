@@ -6,47 +6,81 @@
 
 void menu_registro()
 {
-    int option;
-    Usuario usuarios[100];
+    int option=-1;
+    int capacidad=1;
     int validos = 0;
+    Usuario *usuarios=NULL;
+    usuarios=crear_arreglo_din(capacidad);
 
+    if(!usuarios)
+        return -1;
+
+   while(option != 0){
     printf("Que tipo de usuario desea registrar\n");
     printf("0. Salir\n");
     printf("1. Usuario\n");
     printf("2. Artista\n");
     scanf("%d", &option);
 
-    while(option != 0){
         switch (option)
         {
         case 1:
-            usuarios[validos] = crear_usuario(usuarios, validos);
-            validos++;
+            if(validos==capacidad)
+            {
+            usuarios=redimensionar_arr(usuarios,&capacidad);
+            }
+
+            if(validos<capacidad)
+            {
+                crear_usuario(usuarios,&validos);
+            }
+            dumpearUsuariosABin("usuarios.bin",&usuarios[validos-1]);
+
+
             break;
 
         }
-
-//        printf("Que tipo de usuario desea registrar\n");
-//        printf("0. Salir\n");
-//        printf("1. Usuario\n");
-//        printf("2. Artista\n");
-//        scanf("%d", &option);
     }
 
+    free(usuarios);
+    usuarios=NULL;
 }
-Usuario* cargar_arregloDin(Usuario *usuarios,int *capacidad,int *validos)
+Usuario* redimensionar_arr(Usuario usuarios[],int* capacidad)
 {
+    Usuario* temp;
+    int nueva_capacidad=(*capacidad)+1;
+    temp=realloc(usuarios,sizeof(Usuario)*nueva_capacidad);
+    if(temp)
+    {
+     usuarios=temp;
+     (*capacidad)++;
+     return temp;
+    }
+    else
+    {
+        printf("Error al redimensionar el archivo");
+        return usuarios;
+    }
+}
+Usuario* crear_arreglo_din(int capacidad)
+{
+    Usuario *usuarios=NULL;
+    usuarios=malloc(sizeof(Usuario)*capacidad);
+    if(!usuarios)
+    {
+        printf("ERROR de espacio en memoria\n");
+        return NULL;
+    }
     return usuarios;
 }
-
-Usuario crear_usuario(Usuario *usuarios, int validos)
+void crear_usuario(Usuario usuarios[], int *validos)
 {
     Usuario a;
     //--------------------------//
     do{
     printf("Ingrese el nickname: ");
     scanf("%29s", a.nickname);
-    }while(corroborrar_string_repetido(usuarios,validos,a.nickname)!=0);
+    }while(corroborrar_string_repetido(usuarios,*validos,a.nickname)!=0);
     while(getchar()!='\n');
     //----------------------------//
     do{
@@ -57,17 +91,18 @@ Usuario crear_usuario(Usuario *usuarios, int validos)
     do{
     printf("Ingrese su mail: ");
     scanf("%49s", a.email);
-    }while(corroborrar_string_repetido(usuarios,validos,a.email)!=0);
+    }while(corroborrar_string_repetido(usuarios,*validos,a.email)!=0);
     //----------------------------------//
     a.idUsuario = generar_ID();
     printf("Cargado correctamente!\n");
     printf("Su ID es: %d\n", a.idUsuario);
 
-    return a;
+    usuarios[*validos]=a;
+    (*validos)++;
 }
 int generar_ID()
 {
-  static int ID = 0;
+  static int ID = 0000;
   return ++ID;
 }
 
@@ -117,7 +152,8 @@ void dumpearUsuariosABin(char *filename, Usuario *user) {
     FILE *buffer = fopen(filename, "ab");
     bufferError(buffer);
 
-    if(!buffer) return;
+    if(!buffer)
+        return;
 
     fwrite(user, sizeof(Usuario), 1, buffer);
 
