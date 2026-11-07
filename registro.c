@@ -102,8 +102,36 @@ void crear_usuario(Usuario usuarios[], int *validos)
 }
 int generar_ID()
 {
-  static int ID = 0000;
-  return ++ID;
+    FILE*archivo=fopen("usuarios.bin","rb");
+    if(!archivo)
+    {
+        printf("No se pudo abrir el archivo");
+        return-1;
+    }
+
+    fseek(archivo,0L,SEEK_END);
+    long bytes=ftell(archivo);
+    cantidad=bytes/sizeof(Usuario);
+    if(cantidad==0)
+    {
+        nuevoID=0;
+    }
+    if(cantidad>0)
+    {
+    fseek(archivo,-1L(sizeof(Usuario),SEEK_END);
+    Usuario aux;
+    int leido= fread(&aux,sizeof(Usuario),1,archivo);
+        if(leido!=1)
+        {
+            printf("Error en la lectura del archivo");
+            return -1;
+        }
+            nuevoID=(aux.idUsuario)+1;
+    }
+    if(cantidad<0)
+        printf("ERROR, en la busqueda de archivos");
+
+    return nuevoID;
 }
 
 int corroborrar_string_repetido(Usuario a[], int validos, char string_ingresado[])
