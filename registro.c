@@ -38,20 +38,28 @@ void menu_registro()
 
             if(validos<capacidad)
             {
-                crear_usuario(usuarios,&validos);
+                if(crear_usuario(usuarios,&validos)==-1)
+                {
+                    printf("ERROR en la creacion de usuario.");
+                    free(usuarios);
+                    usuarios=NULL;
+                    return;
+                }
             }
 
             int exito= dumpearUsuariosABin("usuarios.bin",&usuarios[validos-1]);
             if(exito==-1){
                 printf("Error a pasar el usuario al archivo.");
+                free(usuarios);
+                usuarios=NULL;
                 return;
             }
+            free(usuarios);
+            usuarios=NULL;
             break;
         }
     }
 
-    free(usuarios);
-    usuarios=NULL;
 }
 Usuario* redimensionar_arr(Usuario usuarios[],int* capacidad)
 {
@@ -81,14 +89,20 @@ Usuario* crear_arreglo_din(int capacidad)
     }
     return usuarios;
 }
-void crear_usuario(Usuario usuarios[], int *validos)
+
+int crear_usuario(Usuario usuarios[], int *validos)
 {
     Usuario a;
+    int repetido=0;
+    a.idUsuario = generar_ID();
     //--------------------------//
     do{
     printf("Ingrese el nickname: ");
     scanf("%29s", a.nickname);
-    }while(corroborrar_string_repetido(usuarios,*validos,a.nickname)!=0);
+    repetido=corroborrar_string_repetido(a.nickname);
+    if(repetido==-1)
+        return -1;
+    }while(repetido==1);
     while(getchar()!='\n');
     //----------------------------//
     do{
@@ -99,18 +113,26 @@ void crear_usuario(Usuario usuarios[], int *validos)
     do{
     printf("Ingrese su mail: ");
     scanf("%49s", a.email);
-    }while(corroborrar_string_repetido(usuarios,*validos,a.email)!=0);
+    repetido=corroborrar_string_repetido(a.email);
+    if(repetido==-1)
+        return -1;
+    }while(repetido==1);
     //----------------------------------//
-     a.idUsuario = generar_ID();
+     if(a.idUsuario==-1)
+        return -1;
+
     printf("Cargado correctamente!\n");
     printf("Su ID es: %d\n", a.idUsuario);
 
     usuarios[*validos]=a;
     (*validos)++;
+    return 1;
 }
 
 int generar_ID()
 {
+    int repetido=0;
+    int nuevoID=0;
     int error=0;
     int verificacion=0;
     FILE*archivo=fopen("usuarios.bin","rb");
@@ -140,29 +162,61 @@ int generar_ID()
 
     fseek(archivo,0L,SEEK_END);
     long bytes=ftell(archivo);
-    cantidad=bytes/sizeof(Usuario);
+    long cantidad=bytes/sizeof(Usuario);
 
-    if(cantidad==0)
-    {
-        nuevoID=0;
-    }
     if(cantidad>0)
     {
-    fseek(archivo,-(long)(sizeof(Usuario),SEEK_END);
+    fseek(archivo,-(long)sizeof(Usuario),SEEK_END);
     Usuario aux;
     int leido= fread(&aux,sizeof(Usuario),1,archivo);
         if(leido!=1)
         {
             printf("ERROR, en la ultima lectura del archivo");
+            fclose(archivo);
             return -1;
         }
-             nuevoID=(aux.idUsuario)+1;
+        nuevoID=(aux.idUsuario);
+            do{
+               nuevoID++;
+               repetido=corroborar_ID(nuevoID);
+
+               if(repetido==-1)
+               {
+                 fclose(archivo);
+                return-1;
+               }
+
+
+            }while(repetido==1);
+
     }
     if(cantidad<0)
         printf("ERROR, en la busqueda de archivos");
 
+    fclose(archivo);
+
     return nuevoID;
 }
+int corroborar_ID(int ID_ingresado)
+{
+    int repetido=0;
+    FILE*archivo=fopen("usuarios.bin","rb");
+    if(!archivo)
+    {
+        printf("Error de apertura de archivo en el ID");
+        return -1;
+    }
+    Usuario aux;
+    while(fread(&aux,sizeof(Usuario),1,archivo)==1)
+    {
+        if(aux.idUsuario==ID_ingresado)
+            repetido=1;
+    }
+
+    fclose(archivo);
+    return repetido;
+}
+
 int crear_archivo(char *nombre_archivo)
 {
 
@@ -170,33 +224,37 @@ int crear_archivo(char *nombre_archivo)
  if(!archivo)
     return -1;
 
+fclose(archivo);
  return 1;
 }
-int corroborrar_string_repetido(Usuario a[], int validos, char string_ingresado[])
+
+int corroborrar_string_repetido(char string_ingresado[])
 {
     int repetido=0;
-
-    for(int i=0;i<validos;i++)
+    FILE*archivo=fopen("usuarios.bin","rb");
+    if(!archivo)
+        return -1;
+    Usuario aux;
+    while(fread(&aux,sizeof(Usuario),1,archivo)==1)
+    {
+        if(strcmp(aux.email, string_ingresado)==0)
         {
-        if(strcmp(a[i].email, string_ingresado)==0)
             repetido=1;
+            break;
         }
 
-        if(repetido==1)
-        printf("El campo ingresado ya existe\n");
-
-        for(int i=0;i<validos;i++)
+        if(strcmp(aux.nickname,string_ingresado)==0)
         {
-        if(strcmp(a[i].nickname,string_ingresado)==0)
             repetido=1;
+            break;
         }
-
-        if(repetido==1)
-        printf("El campo ingresado ya existe\n");
-
-
+    }
+    if(repetido==1)
+        printf("Campo ingresado ya existente!");
+    fclose(archivo);
     return repetido;
 }
+
 int corroborar_contrasenia(char c[], int dim)
 {
  int flag=0;
@@ -214,14 +272,19 @@ int corroborar_contrasenia(char c[], int dim)
  return flag;
 }
 
-int dumpearUsuariosABin(char *filename, Usuario *user) {
+int dumpearUsuariosABin(char *filename, Usuario *user)
+{
     FILE *buffer = fopen(filename, "ab");
     bufferError(buffer);
 
     if(!buffer)
         return -1;
 
-    fwrite(user, sizeof(Usuario), 1, buffer);
+    if(fwrite(user, sizeof(Usuario), 1, buffer)!=1)
+    {
+      fclose(buffer);
+      return -1;
+    }
 
     fclose(buffer);
     return 1;
