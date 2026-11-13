@@ -42,3 +42,10 @@
 	"login.h"
 	"registro.h"
 
+1794321735 source:/Users/mateoymargui/Documents/GitHub/sonus/registro.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"registro.h"
+
