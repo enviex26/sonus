@@ -67,3 +67,13 @@
 	<ctype.h>
 	"registro.h"
 
+1794690563 source:d:\gonza\documentos\github\sonus\usuario.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"login.h"
+	"registro.h"
+	"artista.h"
+
+1794687152 d:\gonza\documentos\github\sonus\artista.h
+
