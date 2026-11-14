@@ -31,17 +31,17 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="login.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="login.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="registro.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="login.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="registro.h" />
-		<Unit filename="login.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

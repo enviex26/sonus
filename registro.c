@@ -18,6 +18,7 @@ void menu_registro()
         switch (option)
         {
         case 1:
+            {
                 int capacidad=1;
                 int validos = 0;
                 Usuario *usuarios=NULL;
@@ -58,9 +59,180 @@ void menu_registro()
             usuarios=NULL;
             break;
         }
+        case 2:
+            {
+//            Artista* artistas=NULL;
+//            int capacidad=1;
+//            artistas=crear_arr_din(capacidad);
+//            if(!artistas)
+//            {
+//                printf("ERROR al crear el arreglo.\n");
+//                free(artistas);
+//                return;
+//            }
+            Artista b=cargar_artista();
+            int exito=pasar_artista_a_archivo(b);
+            if(exito!=1)
+            {
+                printf("Error al pasar al archivo.\n");
+                return;
+            }
+            break;
+            }
+
+        }
     }
 
 }
+//-------------------REGISTRO ARTISTA-------------------------//
+int pasar_artista_a_archivo(Artista b)
+{
+    FILE* archivo=fopen("artistas.bin","ab");
+     if(archivo != NULL)
+    {
+        fwrite(&b, sizeof(Artista), 1, archivo);
+        fclose(archivo);
+        return 1;
+    }
+    return -1;
+}
+Artista cargar_artista()
+{
+    Artista b;
+    int repetido=0;
+
+    b.IdArtista= generar_ID_artista();
+    //--------------------------//
+    printf("Ingrese su nombre: ");
+    scanf("%49[^\n]", b.nombre);
+    //--------------------------//
+    do{
+    printf("Ingrese su contrasenia: ");
+    scanf("%19s", b.contrasenia);
+    }while(corroborar_contrasenia(b.contrasenia, (int)strlen(b.contrasenia))==0);
+    //--------------------------//
+    printf("Genero identificado: ");
+    scanf("%29[^\n]", b.generoPrincipal);
+    //--------------------------//
+    do{
+    printf("Ingrese su nickname: ");
+    scanf("%29[^/n]", b.nickname);
+    repetido=corroborar_string_Art(b.nickname);
+    }while (repetido==1);
+
+    return b;
+}
+int corroborrar_string_Art(char string_ingresado[])
+{
+    int repetido=0;
+    FILE*archivo=fopen("artistas.bin","rb");
+    if(!archivo)
+        return -1;
+    Artista aux;
+    while(fread(&aux,sizeof(Artista),1,archivo)==1)
+    {
+        if(strcmp(aux.nickname,string_ingresado)==0)
+        {
+            repetido=1;
+            break;
+        }
+    }
+    if(repetido==1)
+        printf("Campo ingresado ya existente!");
+
+    fclose(archivo);
+    return repetido;
+}
+int generar_ID_artista()
+{
+     int repetido=0;
+    int nuevoID=0;
+
+    int verificacion=0;
+    FILE*archivo=fopen("artistas.bin","rb");
+    if(!archivo)
+    {
+        verificacion=crear_archivo("artistas.bin");
+        if(verificacion==-1)
+        {
+         printf("Error en la creacion del archivo.\n");
+         return -1;
+        }
+
+    }
+    if(verificacion==1)
+    {
+        printf("Archivo creado con exito!\n");
+        archivo=fopen("artistas.bin","rb");
+        if(!archivo){
+            printf("ERROR en la lectura del archivo.");
+            return -1;
+        }
+    }
+
+    fseek(archivo,0L,SEEK_END);
+    long bytes=ftell(archivo);
+    long cantidad=bytes/sizeof(Artista);
+
+    if(cantidad>0)
+    {
+    fseek(archivo,-(long)sizeof(Artista),SEEK_END);
+    Artista aux;
+    int leido= fread(&aux,sizeof(Artista),1,archivo);
+        if(leido!=1)
+        {
+            printf("ERROR, en la ultima lectura del archivo");
+            fclose(archivo);
+            return -1;
+        }
+        nuevoID=(aux.IdArtista);
+            do{
+               nuevoID= nuevoID + 1;
+               repetido=corroborar_ID_artista(nuevoID);
+
+               if(repetido==-1)
+               {
+                 fclose(archivo);
+                return-1;
+               }
+
+
+            }while(repetido==1);
+
+    }
+    if(cantidad<0)
+        printf("ERROR, en la busqueda de archivos");
+
+    fclose(archivo);
+
+    return nuevoID;
+}
+
+int corroborar_ID_artista(int ID_ingresado)
+{
+    int repetido=0;
+    FILE*archivo=fopen("artistas.bin","rb");
+    if(!archivo)
+    {
+        printf("Error de apertura de archivo en el ID");
+        return -1;
+    }
+    Artista aux;
+    while(fread(&aux,sizeof(Artista),1,archivo)==1)
+    {
+        if(aux.IdArtista==ID_ingresado)
+            repetido=1;
+    }
+
+    fclose(archivo);
+    return repetido;
+}
+Artista* crear_arr_din(int capacidad)
+{
+    return malloc(sizeof(Artista)*capacidad);
+}
+
+//-------------------REGISTRO USUARIO-------------------------//
 Usuario* redimensionar_arr(Usuario usuarios[],int* capacidad)
 {
     Usuario* temp;
