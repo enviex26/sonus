@@ -108,24 +108,19 @@ void mostrarCancion(Cancion can)
     printf("Calificacion Promedio: %.2f / 5.0\n", can.calificacionPromedio);
     printf("\n");
 }
-void buscarCancionPorTitulo(Cancion *cancionEncontrada,const char nombreArchivo[],char idAlbum[])
+void buscarCancionPorAlbum(FILE *archivoCancion,Cancion *encontrada,char idAlbum[])
 {
-    FILE *archivo=Abrirarchivo(nombreArchivo,"rb");
-    if(archivo==NULL)
-    {
-        printf("Error al abrir archivo\n");
-        return;
-    }
-
     Cancion leerCancion;
-    while(fread(&leerCancion,sizeof(Cancion),1,archivo)==1)
+    encontrada->duracionSegundos = -1;
+
+    while (fread(&leerCancion, sizeof(Cancion), 1, archivoCancion) == 1)
     {
-        if(strcmp(leerCancion.idAlbum, idAlbum) == 0)
+        if (strcmp(leerCancion.idAlbum, idAlbum) == 0)
         {
-            *cancionEncontrada=leerCancion;
+            *encontrada = leerCancion;
+            return;
         }
     }
-    fclose(archivo);
 }
 void verCatalogoporArtista(const char nombreArchivoArtistas[],const char nombreArchivoAlbum[],const char nombreArchivoCancion[])
 {
@@ -149,6 +144,14 @@ void verCatalogoporArtista(const char nombreArchivoArtistas[],const char nombreA
         return;
     }
 
+    FILE *archivoCancion=Abrirarchivo(nombreArchivoCancion,"rb");
+    if(archivoCancion==NULL)
+    {
+        fclose(archivoAlbum);
+        printf("Error al abrir archivo\n");
+        return;
+    }
+
     Album leerAlbum;
     while(fread(&leerAlbum,sizeof(Album),1,archivoAlbum)==1)
     {
@@ -156,7 +159,8 @@ void verCatalogoporArtista(const char nombreArchivoArtistas[],const char nombreA
         {
             mostrarAlbum(leerAlbum);
             Cancion buscada;
-            buscarCancionPorTitulo(&buscada,nombreArchivoCancion,leerAlbum.idAlbum);
+            rewind(archivoCancion);
+            buscarCancionPorAlbum(archivoCancion, &buscada, leerAlbum.idAlbum);
             if (buscada.duracionSegundos!=-1)
             {
                 mostrarCancion(buscada);
@@ -164,6 +168,7 @@ void verCatalogoporArtista(const char nombreArchivoArtistas[],const char nombreA
             else printf("Cancion no Encontrada\n");
         }
     }
+    fclose(archivoCancion);
     fclose(archivoAlbum);
 }
 Album buscarAlbumTitulo(char albumBuscar[],char nombreArchivo[])
@@ -189,10 +194,6 @@ Album buscarAlbumTitulo(char albumBuscar[],char nombreArchivo[])
     fclose(archivo);
     return noEncontrado;
 }
-void buscarCancionPorAlbum(char nombreArchivo[])
-{
-    FILE *archivo=Abrirarchivo(nombreArchivo,"rb");
-}
 void verCancionesPorAlbum(const char nombreArchivoAlbum[],const char nombreArchivoCancion[])
 {
     char albumBuscar[100];
@@ -200,20 +201,37 @@ void verCancionesPorAlbum(const char nombreArchivoAlbum[],const char nombreArchi
     fgets(albumBuscar,100,stdin);
     albumBuscar[strcspn(albumBuscar, "\n")] = '\0';
 
-
-
     FILE *archivoCancion=Abrirarchivo(nombreArchivoCancion,"rb");
     if(archivoCancion==NULL)
     {
-        printf("Error al Abrir el Archivo\n");
+        printf("Error al abrir archivo\n");
+        return;
+    }
+    Album albumEncontrado=buscarAlbumTitulo(albumBuscar,nombreArchivoAlbum);
+    if(albumEncontrado.cantidadCanciones==-1)
+    {
+        printf("Album no Encontrado\n");
+        fclose(archivoCancion);
         return;
     }
 
     Cancion leerCancion;
     int encontradas = 0;
 
+    printf("Canciones:\n");
+    while (fread(&leerCancion, sizeof(Cancion), 1, archivoCancion) == 1)
+    {
+        if (strcmp(leerCancion.idAlbum, albumEncontrado.idAlbum) == 0)
+        {
+            mostrarCancion(leerCancion);
+            encontradas = 1;
+        }
+    }
 
-
+    if (!encontradas)
+    {
+        printf("No hay canciones para este album.\n");
+    }
     fclose(archivoCancion);
 }
 
