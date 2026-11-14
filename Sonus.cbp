@@ -38,10 +38,15 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="registro.c">
+		<Unit filename="login.h" />
+		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="registro.h" />
+		<Unit filename="usuario.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="usuario.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
