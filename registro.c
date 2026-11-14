@@ -7,8 +7,6 @@
 void menu_registro()
 {
     int option=-1;
-
-   while(option != 0){
     printf("Que tipo de usuario desea registrar\n");
     printf("0. Salir\n");
     printf("1. Usuario\n");
@@ -61,30 +59,50 @@ void menu_registro()
         }
         case 2:
             {
-//            Artista* artistas=NULL;
-//            int capacidad=1;
-//            artistas=crear_arr_din(capacidad);
-//            if(!artistas)
-//            {
-//                printf("ERROR al crear el arreglo.\n");
-//                free(artistas);
-//                return;
-//            }
-            Artista b=cargar_artista();
-            int exito=pasar_artista_a_archivo(b);
+            Artista b;
+            int exito=cargar_artista(&b);
+            if(exito==-1)
+                return;
+
+            exito=0;
+            exito=pasar_artista_a_archivo(b);
             if(exito!=1)
             {
                 printf("Error al pasar al archivo.\n");
                 return;
             }
+            else
+            {
+                printf("Artista registrado, bienvenido a Sonus.\n");
+            }
+            mostrar_artistas();
             break;
             }
 
         }
-    }
-
 }
 //-------------------REGISTRO ARTISTA-------------------------//
+void mostrar_artista(Artista b)
+{
+    printf("-------------------\n");
+    printf("Nombre: %s \n",b.nombre);
+    printf("Genero: %s \n",b.generoPrincipal);
+    printf("Nickname: %s \n",b.nickname);
+    printf("ID: %i \n",b.IdArtista);
+    printf("--------------------\n");
+}
+void mostrar_artistas()
+{
+    FILE*archivo=fopen("artistas.bin","rb");
+    if(!archivo)
+        return;
+    Artista aux;
+    while(fread(&aux,sizeof(Artista),1,archivo)==1)
+    {
+        mostrar_artista(aux);
+    }
+    fclose(archivo);
+}
 int pasar_artista_a_archivo(Artista b)
 {
     FILE* archivo=fopen("artistas.bin","ab");
@@ -96,39 +114,60 @@ int pasar_artista_a_archivo(Artista b)
     }
     return -1;
 }
-Artista cargar_artista()
+int cargar_artista(Artista *b)
 {
-    Artista b;
     int repetido=0;
-
-    b.IdArtista= generar_ID_artista();
+    if(generar_ID_artista()==-1)
+    {
+        printf("ERROR en el ID.\n");
+        return -1;
+    }
+    b->IdArtista= generar_ID_artista();
     //--------------------------//
-    printf("Ingrese su nombre: ");
-    scanf("%49[^\n]", b.nombre);
+    do{
+     printf("Ingrese su nombre: ");
+    scanf(" %49[^\n]", b->nombre);
+    repetido=corroborar_string_Art(b->nombre);
+    if(repetido==-1)
+    {
+        printf("Error en la busqueda de repetidos.");
+        return -1;
+    }
+    }while(repetido==1);
     //--------------------------//
     do{
     printf("Ingrese su contrasenia: ");
-    scanf("%19s", b.contrasenia);
-    }while(corroborar_contrasenia(b.contrasenia, (int)strlen(b.contrasenia))==0);
+    scanf(" %19s", b->contrasenia);
+    }while(corroborar_contrasenia(b->contrasenia, (int)strlen(b->contrasenia))==0);
     //--------------------------//
     printf("Genero identificado: ");
-    scanf("%29[^\n]", b.generoPrincipal);
+    scanf(" %29[^\n]", b->generoPrincipal);
     //--------------------------//
     do{
     printf("Ingrese su nickname: ");
-    scanf("%29[^/n]", b.nickname);
-    repetido=corroborar_string_Art(b.nickname);
+    scanf(" %29[^\n]", b->nickname);
+    repetido=corroborar_string_Art(b->nickname);
+    if(repetido==-1)
+    {
+        printf("Error en la busqueda de repetidos.");
+        return -1;
+    }
     }while (repetido==1);
 
-    return b;
+
+    printf("Artista creado!\n");
+    printf("Su ID es: %i \n", b->IdArtista);
+
+    return 1;
 }
-int corroborrar_string_Art(char string_ingresado[])
+int corroborar_string_Art(char string_ingresado[])
 {
     int repetido=0;
     FILE*archivo=fopen("artistas.bin","rb");
     if(!archivo)
         return -1;
     Artista aux;
+
     while(fread(&aux,sizeof(Artista),1,archivo)==1)
     {
         if(strcmp(aux.nickname,string_ingresado)==0)
@@ -136,9 +175,16 @@ int corroborrar_string_Art(char string_ingresado[])
             repetido=1;
             break;
         }
+
+        if(strcmp(aux.nombre,string_ingresado)==0)
+        {
+            repetido=1;
+            break;
+        }
     }
+
     if(repetido==1)
-        printf("Campo ingresado ya existente!");
+        printf("Campo ingresado ya existente!\n");
 
     fclose(archivo);
     return repetido;
@@ -271,7 +317,7 @@ int crear_usuario(Usuario usuarios[], int *validos)
     do{
     printf("Ingrese el nickname: ");
     scanf("%29s", a.nickname);
-    repetido=corroborrar_string_repetido(a.nickname);
+    repetido=corroborar_string_repetido(a.nickname);
     if(repetido==-1)
         return -1;
     }while(repetido==1);
@@ -285,7 +331,7 @@ int crear_usuario(Usuario usuarios[], int *validos)
     do{
     printf("Ingrese su mail: ");
     scanf("%49s", a.email);
-    repetido=corroborrar_string_repetido(a.email);
+    repetido=corroborar_string_repetido(a.email);
     if(repetido==-1)
         return -1;
     }while(repetido==1);
@@ -400,7 +446,7 @@ fclose(archivo);
  return 1;
 }
 
-int corroborrar_string_repetido(char string_ingresado[])
+int corroborar_string_repetido(char string_ingresado[])
 {
     int repetido=0;
     FILE*archivo=fopen("usuarios.bin","rb");

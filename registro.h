@@ -19,12 +19,13 @@ typedef struct stUsuario {
 int corroborar_ID_artista(int ID_ingresado);
 int generar_ID_artista();
 int corroborar_string_Art(char string_ingresado[]);
-Artista cargar_artista();
+int cargar_artista(Artista *b);
 int pasar_artista_a_archivo(Artista b);
+void mostrar_artistas();
 
 //--------------USUARIOS----------------//
 int corroborar_contrasenia(char c[], int dim);
-int corroborrar_string_repetido(char string_ingresado[]);
+int corroborar_string_repetido(char string_ingresado[]);
 int generar_ID();
 int crear_usuario(Usuario usuarios[], int *validos);
 void menu_registro();
