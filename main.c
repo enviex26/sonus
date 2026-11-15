@@ -2,31 +2,38 @@
 #include <stdlib.h>
 #include "registro.h"
 #include "login.h"
+#include "extras.h"
 
 int main(void){
     int option;
-    printf("------------\n");
-    printf("Bienvenido a Sonus!\n");
-    printf("------------\n");
-
-
+// EN LOS CASES, AGREGAR OTRO MENU PARA LAS FUNCIONALIDADES
+// QUE SOLO SEA ACCESIBLE SI EL USUARIO INICIO SESIÓN
 
     while (option) {
+        limpiarConsola();
+        printf("------------\n");
+        printf("Bienvenido a Sonus!\n");
+        printf("------------\n");
         printf("Que desea hacer?\n");
-        printf("1. Iniciar Sesion\n2. Registro\n3. Salir\nIngrese una opcion: ");
+        printf("0. Salir\n1. Iniciar Sesion\n2. Registro\n\nIngrese una opcion: ");
         scanf("%d", &option);
 
 
         switch(option) {
+
         case 1:
-            menuInicioSesion();
+            limpiarConsola();
+            menuLogin();
             break;
 
         case 2:
+            limpiarConsola();
             menu_registro();
             break;
-        case 3:
+
+        default:
             return 0;
+
         }
     }
 
