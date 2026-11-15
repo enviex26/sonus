@@ -62,17 +62,12 @@ void menu_usuario(char nickNameUsuario[])
         }
     }
 }
-FILE *Abrirarchivo(const char nombreArchivo[],char modo[])//no creo que haga falta esta funcion
-{
-    FILE *archivo=fopen(nombreArchivo,modo);
-    return archivo;
-}
 Artista buscarArtistaPorNombre(char artistaBuscar[],const char nombreArchivo[])
 {
     Artista noEncontrado;
     noEncontrado.IdArtista=-1;
 
-    FILE *archivo=Abrirarchivo(nombreArchivo,"rb");
+    FILE *archivo=fopen(nombreArchivo,"rb");
     if(archivo==NULL)
     {
         printf("Error al abrir archivo\n");
@@ -139,14 +134,14 @@ void verCatalogoporArtista(const char nombreArchivoArtistas[],const char nombreA
         return;
     }
 
-    FILE *archivoAlbum=Abrirarchivo(nombreArchivoAlbum,"rb");
+    FILE *archivoAlbum=fopen(nombreArchivoAlbum,"rb");
     if(archivoAlbum==NULL)
     {
         printf("Error al abrir archivo\n");
         return;
     }
 
-    FILE *archivoCancion=Abrirarchivo(nombreArchivoCancion,"rb");
+    FILE *archivoCancion=fopen(nombreArchivoCancion,"rb");
     if(archivoCancion==NULL)
     {
         fclose(archivoAlbum);
@@ -177,7 +172,7 @@ Album buscarAlbumTitulo(char albumBuscar[],char nombreArchivo[])
 {
     Album noEncontrado;
     noEncontrado.cantidadCanciones=-1;
-    FILE *archivo=Abrirarchivo(nombreArchivo,"rb");
+    FILE *archivo=fopen(nombreArchivo,"rb");
     if(archivo==NULL)
     {
         printf("Error al abrir archivo\n");
@@ -202,7 +197,7 @@ void verCancionesPorAlbum(const char nombreArchivoAlbum[],const char nombreArchi
     fgets(albumBuscar,100,stdin);
     albumBuscar[strcspn(albumBuscar, "\n")] = '\0';
 
-    FILE *archivoCancion=Abrirarchivo(nombreArchivoCancion,"rb");
+    FILE *archivoCancion=fopen(nombreArchivoCancion,"rb");
     if(archivoCancion==NULL)
     {
         printf("Error al abrir archivo\n");
@@ -242,7 +237,7 @@ void buscarCancionPorTitulo(Cancion *encontrada,char nombreArchivoCancion[])
     fgets(tituloBuscar,100,stdin);
     tituloBuscar[strcspn(tituloBuscar,"\n")]='\0';
 
-    FILE *archivo=Abrirarchivo(nombreArchivoCancion,"rb");
+    FILE *archivo=fopen(nombreArchivoCancion,"rb");
     if(archivo==NULL)
     {
         printf("Error al Abrir Archivo\n");
@@ -280,6 +275,7 @@ int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[],co
     int nuevaPuntuacion;
     printf("Ingrese Nueva Calificacion(1/5): ");
     scanf("%d",&nuevaPuntuacion);
+    int totalRegistros = 1;
 
     while(nuevaPuntuacion>5 || nuevaPuntuacion<1)
     {
@@ -287,10 +283,10 @@ int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[],co
         scanf("%d",&nuevaPuntuacion);
     }
 
-    FILE *archivo=Abrirarchivo(nombreArchivoCalificacion,"r+b");
+    FILE *archivo=fopen(nombreArchivoCalificacion,"r+b");
     if(archivo==NULL)
     {
-        archivo = Abrirarchivo(nombreArchivoCalificacion, "w+b");
+        archivo =fopen(nombreArchivoCalificacion, "w+b");
         if (archivo == NULL)
         {
             printf("Error al Abrir Archivo\n");
@@ -302,6 +298,7 @@ int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[],co
 
     while(fread(&leer,sizeof(Calificacion),1,archivo)==1)
     {
+        totalRegistros++;
         if(strcmp(leer.idCancion, encontrada.idCancion) == 0 && strcmp(leer.nicknameUsuario,nicknameUsuario)==0)
         {
             leer.puntuacion=nuevaPuntuacion;
@@ -311,20 +308,21 @@ int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[],co
             return 1;
         }
     }
-
+    fseek(archivo,0,SEEK_END);
     Calificacion nuevaCalificacion;
+    nuevaCalificacion.idRegistroCal=totalRegistros;
     strcpy(nuevaCalificacion.nicknameUsuario, nicknameUsuario);
     strcpy(nuevaCalificacion.idCancion, encontrada.idCancion);
     nuevaCalificacion.puntuacion=nuevaPuntuacion;
 
-    fseek(archivo,0,SEEK_END);
+
     fwrite(&nuevaCalificacion,sizeof(Calificacion),1,archivo);
     fclose(archivo);
     return 1;
 }
 void calcularCantidadYSuma(Cancion encontrada,char nombreArchivo[],float *suma, int *cantidad)
 {
-    FILE *archivo = Abrirarchivo(nombreArchivo, "rb");
+    FILE *archivo = fopen(nombreArchivo, "rb");
     if(archivo==NULL)
     {
         printf("No fue posible abrir el Archivo\n");
@@ -387,7 +385,7 @@ void calificarCancion(char nombreArchivoCancion[],char nombreArchivoCalificacion
         int cantidad;
         calcularCantidadYSuma(encontrada,nombreArchivoCalificacion,&suma,&cantidad);
 
-        FILE *archivoCanciones=Abrirarchivo(nombreArchivoCancion,"r+b");
+        FILE *archivoCanciones=fopen(nombreArchivoCancion,"r+b");
         if(archivoCanciones==NULL)
         {
             printf("No fue Posible abrir el Archivo\n");
@@ -410,7 +408,7 @@ void mostrarCalificacion(Calificacion cal)
 
 void verMisCalificaciones(const char nombreArchivoCalificacion[], const char nickNameUsuario[])
 {
-    FILE *archivo = Abrirarchivo(nombreArchivoCalificacion, "rb");
+    FILE *archivo = fopen(nombreArchivoCalificacion, "rb");
     if (archivo == NULL)
     {
         printf("No fue posible abrir el archivo de calificaciones\n");

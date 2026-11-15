@@ -2,15 +2,14 @@
 #define USUARIO_H_INCLUDED
 
 typedef struct stCalificacion {
- char idRegistroCal[10];
+ int idRegistroCal;
  char nicknameUsuario[30];
  char idCancion[10];
  int puntuacion;
 } Calificacion;
 
 
-void menu_usuario(); // o sin parámetro si usás global/extern
-FILE *Abrirarchivo(const char nombreArchivo[], char modo[]);
+void menu_usuario(char nickNameUsuario[]);
 Artista buscarArtistaPorNombre(char artistaBuscar[], const char nombreArchivo[]);
 void mostrarAlbum(Album alb);
 void mostrarCancion(Cancion can);
