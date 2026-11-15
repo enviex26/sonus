@@ -234,4 +234,43 @@ void verCancionesPorAlbum(const char nombreArchivoAlbum[],const char nombreArchi
     }
     fclose(archivoCancion);
 }
+void buscarCancionPorTitulo(FILE *archivo,Cancion *encontrada,char idCancionBuscar[])
+{
+    Cancion leerCancion;
+    encontrada->duracionSegundos=-1;
 
+    while (fread(&leerCancion, sizeof(Cancion), 1, archivo) == 1)
+    {
+        if (strcmp(leerCancion.idCancion, idCancionBuscar) == 0)
+        {
+            *encontrada = leerCancion;
+            return;
+        }
+    }
+}
+void infoDetalladaCancion(char nombreArchivoCancion[])
+{
+    char idCancionBuscar[10];
+    printf("Ingrese Cancion\n");
+    fgets(idCancionBuscar,10,stdin);
+    idCancionBuscar[strcspn(idCancionBuscar,"\n")]='\0';
+
+    FILE *archivo=Abrirarchivo(nombreArchivoCancion,"rb");
+    if(archivo==NULL)
+    {
+        printf("Error al Abrir Archivo\n");
+        return;
+    }
+
+    Cancion encontrada;
+    buscarCancionPorTitulo(archivo,&encontrada,idCancionBuscar);
+    if(encontrada.duracionSegundos==-1)
+    {
+        printf("La cancion no fue Encontrada\n");
+        fclose(archivo);
+        return;
+    }
+
+    mostrarCancion(encontrada);
+    fclose(archivo);
+}
