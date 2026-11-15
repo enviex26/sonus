@@ -272,14 +272,14 @@ int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[])
 {
     int nuevaPuntuacion;
     printf("Ingrese Nueva Calificacion(1/5): ");
-    scanf("%d",nuevaPuntuacion);
-    while(nuevaPuntuacion>5 && nuevaPuntuacion<1)
+    scanf("%d",&nuevaPuntuacion);
+    while(nuevaPuntuacion>5 || nuevaPuntuacion<1)
     {
         printf("Ingrese una Calificacion Correcta(1/5) \n");
-        scanf("%int",&nuevaPuntuacion);
+        scanf("%d",&nuevaPuntuacion);
     }
 
-    FILE *archivo=Abrirarchivo(nombreArchivoCalificacion,"a+b");
+    FILE *archivo=Abrirarchivo(nombreArchivoCalificacion,"r+b");
     if(archivo==NULL)
     {
         printf("Error al Abrir Archivo\n");
@@ -291,20 +291,70 @@ int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[])
     int coincide=0;
     while(fread(&leer,sizeof(Calificacion),1,archivo)==1)
     {
-        if(strcmp(leer.idCancion, encontrada.idCancion) == 0)
+        if(strcmp(leer.idCancion, encontrada.idCancion) == 0 && strcmp(leer.nicknameUsuario,nicknameUsuario)==0)
         {
             leer.puntuacion=nuevaPuntuacion;
             fseek(archivo,-(long)sizeof(Calificacion),SEEK_CUR);
             fwrite(&leer,sizeof(Calificacion),1,archivo);
+            fclose(archivo);
             return 1;
         }
     }
     Calificacion nuevaCalificacion;
+    fseek(archivo,0,SEEK_END);
     //agregar datos
     nuevaCalificacion.puntuacion=nuevaPuntuacion;
-    fwrite(&leer,sizeof(Calificacion),1,archivo);
+    fwrite(&nuevaCalificacion,sizeof(Calificacion),1,archivo);
+    fclose(archivo);
     return 1;
 
+}
+void calcularCantidadYSuma(Cancion encontrada,char nombreArchivo[],float *suma, int *cantidad)
+{
+    FILE *archivo = Abrirarchivo(nombreArchivo, "rb");
+    if(archivo==NULL)
+    {
+        printf("No fue posible abrir el Archivo\n");
+        return;
+    }
+
+    Calificacion leer;
+    *suma=0;
+    *cantidad=0;
+
+    while(fread(&leer,sizeof(Calificacion),1,archivo)==1)
+    {
+        if(strcmp(leer.idCancion, encontrada.idCancion) == 0)
+        {
+            (*suma)+=leer.puntuacion;
+            (*cantidad)++;
+        }
+    }
+
+    fclose(archivo);
+}
+float calcularPromedio(float suma, int cantidad)
+{
+    if (cantidad <= 0)
+    {
+        return 0;
+    }
+    return suma/(float)cantidad;
+}
+
+void actualizarPromedioCancion(FILE *archivoCanciones,Cancion encontrada,float suma, int cantidad)
+{
+    Cancion leerCancion;
+    while (fread(&leerCancion, sizeof(Cancion), 1, archivoCanciones) == 1)
+    {
+        if (strcmp(leerCancion.idCancion, encontrada.idCancion) == 0)
+        {
+            leerCancion.calificacionPromedio=calcularPromedio(suma,cantidad);
+            fseek(archivoCanciones,-(long)sizeof(Cancion),SEEK_CUR);
+            fwrite(&leerCancion,sizeof(Cancion),1,archivoCanciones);
+            return;
+        }
+    }
 }
 void CalificarCancion(char nombreArchivoCancion[],char nombreArchivoCalificacion[])
 {
@@ -313,17 +363,24 @@ void CalificarCancion(char nombreArchivoCancion[],char nombreArchivoCalificacion
     if(encontrada.duracionSegundos==-1)
     {
         printf("La cancion no fue Encontrada\n");
-<<<<<<< HEAD
         return;
-=======
-        fclose(archivo);
-        return;//por que existe este return?
->>>>>>> af9d32662dea58c6c992064b624f65c35ad5d60b
     }
     if(registrarCalificacion(encontrada,nombreArchivoCalificacion)==1)
     {
-        //promedio
+        float suma;
+        int cantidad;
+        calcularCantidadYSuma(encontrada,nombreArchivoCalificacion,&suma,&cantidad);
+
+        FILE *archivoCanciones=Abrirarchivo(nombreArchivoCancion,"r+b");
+        if(archivoCanciones==NULL)
+        {
+            printf("No fue Posible abrir el Archivo\n");
+            return;
+        }
+
+        actualizarPromedioCancion(archivoCanciones,encontrada,suma,cantidad);
+        fclose(archivoCanciones);
+
+
     }
-
-
 }
