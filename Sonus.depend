@@ -67,7 +67,7 @@
 	<ctype.h>
 	"registro.h"
 
-1794690563 source:d:\gonza\documentos\github\sonus\usuario.c
+1794704050 source:d:\gonza\documentos\github\sonus\usuario.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -75,5 +75,5 @@
 	"registro.h"
 	"artista.h"
 
-1794687152 d:\gonza\documentos\github\sonus\artista.h
+1794704109 d:\gonza\documentos\github\sonus\artista.h
 
