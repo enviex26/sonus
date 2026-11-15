@@ -268,7 +268,7 @@ void infoDetalladaCancion(Cancion *encontrada,char nombreArchivoCancion[],char n
     mostrarCancion(*encontrada);
 
 }
-int registrarCalificacion(Cancion encontrada)
+int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[])
 {
     int nuevaPuntuacion;
     printf("Ingrese Nueva Calificacion(1/5): ");
@@ -315,9 +315,9 @@ void CalificarCancion(char nombreArchivoCancion[],char nombreArchivoCalificacion
         printf("La cancion no fue Encontrada\n");
         return;
     }
-    if(registrarCalificacion(nombreArchivoCalificacion,encontrada)==1)
+    if(registrarCalificacion(encontrada,nombreArchivoCalificacion)==1)
     {
-
+        //promedio
     }
 
 
