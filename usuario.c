@@ -23,32 +23,33 @@ void menu_usuario()
         {
             case 1:
                 {
-                    //llamar funcion
+                    verCatalogoporArtista("Artistas.dat","Album.dat","Canciones.dat");
                     break;
                 }
             case 2:
                 {
-                    //llamar funcion
+                    verCancionesPorAlbum("Album.dat","Canciones.dat");
                     break;
                 }
             case 3:
                 {
-                    //llamar funcion
+                    infoDetalladaCancion("Canciones.dat","Calificaciones.dat");
                     break;
                 }
             case 4:
                 {
-                    //llamar funcion
+                    calificarCancion("Canciones.dat","Calificaciones.dat");
                     break;
                 }
             case 5:
                 {
-                    //llamar funcion
+                    verMisCalificaciones(nicknameUsuario);
                     break;
                 }
             default:
                 {
                     printf("Opcion Incorrecta\n");
+                    break;
                 }
             printf("Ingrese Opcion: \n");
             printf("1.Ver Catalogo por Artista \n");
@@ -262,10 +263,11 @@ void buscarCancionPorTitulo(Cancion *encontrada,char nombreArchivoCancion[])
     }
     fclose(archivo);
 }
-void infoDetalladaCancion(Cancion *encontrada,char nombreArchivoCancion[],char nombreArchivoCalificacion[])
+void infoDetalladaCancion(char nombreArchivoCancion[],char nombreArchivoCalificacion[])
 {
-    buscarCancionPorTitulo(encontrada,nombreArchivoCancion);
-    mostrarCancion(*encontrada);
+    Cancion encontrada;
+    buscarCancionPorTitulo(&encontrada,nombreArchivoCancion);
+    mostrarCancion(&encontrada);
 
 }
 int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[])
@@ -356,7 +358,7 @@ void actualizarPromedioCancion(FILE *archivoCanciones,Cancion encontrada,float s
         }
     }
 }
-void CalificarCancion(char nombreArchivoCancion[],char nombreArchivoCalificacion[])
+void calificarCancion(char nombreArchivoCancion[],char nombreArchivoCalificacion[])
 {
     Cancion encontrada;
     buscarCancionPorTitulo(&encontrada,nombreArchivoCancion);
@@ -380,7 +382,35 @@ void CalificarCancion(char nombreArchivoCancion[],char nombreArchivoCalificacion
 
         actualizarPromedioCancion(archivoCanciones,encontrada,suma,cantidad);
         fclose(archivoCanciones);
-
-
     }
+}
+void mostrarCalificacion(Calificacion cal)
+{
+    printf("ID Calificacion: %s\n", cal.idRegistroCal);
+    printf("Usuario: %s\n", cal.nicknameUsuario);
+    printf("Cancion: %s\n", cal.idCancion);
+    printf("Puntuacion: %d / 5\n", cal.puntuacion);
+    printf("\n");
+}
+void verMisCalificaciones(nicknameUsuario)
+{
+    FILE *archivo=Abrirarchivo(nombreArchivo,"rb");
+    if(archivo==NULL)
+    {
+        printf("Error al abrir el Archivo\n");
+        return;
+    }
+
+    Calificacion leerCalificacion;
+    int encontradas=0;
+    while(fread(&leerCalificacion,sizeof(Calificacion),1,archivo)
+    {
+        if(strcmp(leerCalificacion.nicknameUsuario)==0) MostrarCalificacion(leerCalificacion);
+        encontradas=1;
+    }
+    if(encontradas==0)
+    {
+        printf("No se han encontrado Calificaciones\n");
+    }
+    fclose(archivo);
 }

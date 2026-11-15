@@ -8,4 +8,24 @@ typedef struct stCalificacion {
  int puntuacion;
 } Calificacion;
 
+
+void menu_usuario(); // o sin parámetro si usás global/extern
+FILE *Abrirarchivo(char nombreArchivo[], char modo[]);
+Artista buscarArtistaPorNombre(char artistaBuscar[], const char nombreArchivo[]);
+void mostrarAlbum(Album alb);
+void mostrarCancion(Cancion can);
+void buscarCancionPorAlbum(FILE *archivoCancion, Cancion *encontrada, char idAlbum[]);
+void verCatalogoporArtista(const char nombreArchivoArtistas[], const char nombreArchivoAlbum[], const char nombreArchivoCancion[]);
+Album buscarAlbumTitulo(char albumBuscar[], char nombreArchivo[]);
+void verCancionesPorAlbum(const char nombreArchivoAlbum[], const char nombreArchivoCancion[]);
+void buscarCancionPorTitulo(Cancion *encontrada, char nombreArchivoCancion[]);
+void infoDetalladaCancion(char nombreArchivoCancion[], char nombreArchivoCalificacion[]);
+int registrarCalificacion(Cancion encontrada, char nombreArchivoCalificacion[], const char nicknameUsuario[]);
+void calcularCantidadYSuma(Cancion encontrada, char nombreArchivo[], float *suma, int *cantidad);
+float calcularPromedio(float suma, int cantidad);
+void actualizarPromedioCancion(FILE *archivoCanciones, Cancion encontrada, float suma, int cantidad);
+void calificarCancion(char nombreArchivoCancion[], char nombreArchivoCalificacion[]);
+void mostrarCalificacion(Calificacion cal);
+void verMisCalificaciones(const char nombreArchivoCalificacion[]);
+
 #endif
