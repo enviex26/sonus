@@ -211,7 +211,7 @@ int generar_ID_artista()
         printf("Archivo creado con exito!\n");
         archivo=fopen("artistas.bin","rb");
         if(!archivo){
-            printf("ERROR en la lectura del archivo.");
+            printf("ERROR en la lectura del archivo.\n");
             return -1;
         }
     }
@@ -227,7 +227,7 @@ int generar_ID_artista()
     int leido= fread(&aux,sizeof(Artista),1,archivo);
         if(leido!=1)
         {
-            printf("ERROR, en la ultima lectura del archivo");
+            printf("ERROR, en la ultima lectura del archivo.\n");
             fclose(archivo);
             return -1;
         }
@@ -282,7 +282,7 @@ Artista* crear_arr_din(int capacidad)
 Usuario* redimensionar_arr(Usuario usuarios[],int* capacidad)
 {
     Usuario* temp;
-    int nueva_capacidad=(*capacidad)+1;
+    int nueva_capacidad=(*capacidad)+1; // deberia redimensionarse por mas y luego achicarse con los validos, porque sino hace muchas llamadas, en vez de 1, 5.
     temp=realloc(usuarios,sizeof(Usuario)*nueva_capacidad);
     if(temp)
     {
@@ -292,7 +292,7 @@ Usuario* redimensionar_arr(Usuario usuarios[],int* capacidad)
     }
     else
     {
-        printf("Error al redimensionar el archivo");
+        printf("Error al redimensionar el archivo.\n");
         return usuarios;
     }
 }
@@ -302,7 +302,7 @@ Usuario* crear_arreglo_din(int capacidad)
     usuarios=malloc(sizeof(Usuario)*capacidad);
     if(!usuarios)
     {
-        printf("ERROR de espacio en memoria\n");
+        printf("ERROR de espacio en memoria.\n");
         return NULL;
     }
     return usuarios;
@@ -358,7 +358,7 @@ int generar_ID()
     {
         verificacion=crear_archivo("usuarios.bin");
         if(verificacion==1)
-            printf("Archivo creado con exito!");
+            printf("Archivo creado con exito!\n");
         if(verificacion==-1)
             error=verificacion;
     }
@@ -468,7 +468,7 @@ int corroborar_string_repetido(char string_ingresado[])
         }
     }
     if(repetido==1)
-        printf("Campo ingresado ya existente!");
+        printf("Campo ingresado ya existente!\n");
     fclose(archivo);
     return repetido;
 }
@@ -510,4 +510,5 @@ int dumpearUsuariosABin(char *filename, Usuario *user)
 
 int bufferError(FILE *file) {
     if(!file) return -1;
+    return 0;
 }
