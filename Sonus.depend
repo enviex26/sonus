@@ -42,30 +42,33 @@
 	"login.h"
 	"registro.h"
 
-1794774168 source:d:\gonza\documentos\github\sonus\main.c
+1794777327 source:d:\gonza\documentos\github\sonus\main.c
 	<stdio.h>
 	<stdlib.h>
 	"registro.h"
 	"login.h"
+	"extras.h"
 
 1794680294 d:\gonza\documentos\github\sonus\registro.h
 
-1794774168 d:\gonza\documentos\github\sonus\login.h
+1794777327 d:\gonza\documentos\github\sonus\login.h
 	"registro.h"
 
-1794774168 source:d:\gonza\documentos\github\sonus\login.c
+1794777327 source:d:\gonza\documentos\github\sonus\login.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"login.h"
 	"registro.h"
+	"extras.h"
 
-1794774168 source:d:\gonza\documentos\github\sonus\registro.c
+1794777327 source:d:\gonza\documentos\github\sonus\registro.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 	"registro.h"
+	"extras.h"
 
 1794776664 source:d:\gonza\documentos\github\sonus\usuario.c
 	<stdio.h>
@@ -79,4 +82,6 @@
 1794704109 d:\gonza\documentos\github\sonus\artista.h
 
 1794776758 d:\gonza\documentos\github\sonus\usuario.h
+
+1794777327 d:\gonza\documentos\github\sonus\extras.h
 

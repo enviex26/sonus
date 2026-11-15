@@ -135,7 +135,7 @@ void verCatalogoporArtista(const char nombreArchivoArtistas[],const char nombreA
 
     if(encontrado.IdArtista==-1)
     {
-        printf("Artista No Encontrado");
+        printf("Artista No Encontrado\n");
         return;
     }
 
@@ -237,15 +237,16 @@ void verCancionesPorAlbum(const char nombreArchivoAlbum[],const char nombreArchi
 }
 void buscarCancionPorTitulo(Cancion *encontrada,char nombreArchivoCancion[])
 {
-    char idCancionBuscar[10];
+    char tituloBuscar[100];
     printf("Ingrese Cancion\n");
-    fgets(idCancionBuscar,10,stdin);
-    idCancionBuscar[strcspn(idCancionBuscar,"\n")]='\0';
+    fgets(tituloBuscar,100,stdin);
+    tituloBuscar[strcspn(tituloBuscar,"\n")]='\0';
 
     FILE *archivo=Abrirarchivo(nombreArchivoCancion,"rb");
     if(archivo==NULL)
     {
         printf("Error al Abrir Archivo\n");
+        encontrada->duracionSegundos = -1;
         return;
     }
 
@@ -254,9 +255,10 @@ void buscarCancionPorTitulo(Cancion *encontrada,char nombreArchivoCancion[])
 
     while (fread(&leerCancion, sizeof(Cancion), 1, archivo) == 1)
     {
-        if (strcmp(leerCancion.idCancion, idCancionBuscar) == 0)
+        if (strcmp(leerCancion.titulo, tituloBuscar) == 0)
         {
             *encontrada = leerCancion;
+            fclose(archivo);
             return;
         }
     }
@@ -281,7 +283,7 @@ int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[],co
 
     while(nuevaPuntuacion>5 || nuevaPuntuacion<1)
     {
-        printf("Ingrese una Calificacion Correcta(1/5) \n");
+        printf("Ingrese una Calificacion Correcta(1/5) ");
         scanf("%d",&nuevaPuntuacion);
     }
 
@@ -297,7 +299,6 @@ int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[],co
     }
 
     Calificacion leer;
-    int coincide=0;
 
     while(fread(&leer,sizeof(Calificacion),1,archivo)==1)
     {
