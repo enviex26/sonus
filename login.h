@@ -3,6 +3,8 @@
 #include "registro.h"
 
 void inicioSesion();
-void verificarUsuarioExiste(Usuario *user);
+int verificarUsuarioExiste(char filename[], char nickname[]);
+int verificarContrasenia(char filename[], char contrasenia[], char nickname[]);
+void menuInicioSesion();
 
 #endif // LOGIN_H_INCLUDED

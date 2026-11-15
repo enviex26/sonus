@@ -270,13 +270,13 @@ void infoDetalladaCancion(Cancion *encontrada,char nombreArchivoCancion[],char n
 }
 int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[])
 {
-    int nuevaPuntuacion;
+    int nuevaPuntuacion = 0;
     printf("Ingrese Nueva Calificacion(1/5): ");
-    scanf("%d",nuevaPuntuacion);
-    while(nuevaPuntuacion>5 && nuevaPuntuacion<1)
+    scanf("%d",&nuevaPuntuacion);
+    while(nuevaPuntuacion<1 || nuevaPuntuacion>5)
     {
         printf("Ingrese una Calificacion Correcta(1/5) \n");
-        scanf("%int",&nuevaPuntuacion);
+        scanf("%d",&nuevaPuntuacion);
     }
 
     FILE *archivo=Abrirarchivo(nombreArchivoCalificacion,"a+b");
@@ -313,12 +313,8 @@ void CalificarCancion(char nombreArchivoCancion[],char nombreArchivoCalificacion
     if(encontrada.duracionSegundos==-1)
     {
         printf("La cancion no fue Encontrada\n");
-<<<<<<< HEAD
-        return;
-=======
-        fclose(archivo);
-        return;//por que existe este return?
->>>>>>> af9d32662dea58c6c992064b624f65c35ad5d60b
+//        fclose(archivo); esto sobra, el archivo nunca se abrió
+        return; //por que existe este return? <- para que no pase a la condicion de abajo supongo.
     }
     if(registrarCalificacion(encontrada,nombreArchivoCalificacion)==1)
     {
