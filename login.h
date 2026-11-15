@@ -2,9 +2,16 @@
 #define LOGIN_H_INCLUDED
 #include "registro.h"
 
-void inicioSesion();
+int menuLogin();
+// -- FUNCIONES USUARIO --
 int verificarUsuarioExiste(char filename[], char nickname[]);
-int verificarContrasenia(char filename[], char contrasenia[], char nickname[]);
-void menuInicioSesion();
+int verificarContraseniaUsuario(char filename[], char contrasenia[], char nickname[]);
+void inicioSesionUsuario();
+
+// -- FUNCIONES ARTISTA --
+int verificarArtistaExiste(char filename[], char nickname[]);
+int verificarContraseniaArtista(char filename[], char contrasenia[], char nickname[]);
+void inicioSesionArtista();
+
 
 #endif // LOGIN_H_INCLUDED

@@ -3,15 +3,21 @@
 #include <string.h>
 #include <ctype.h>
 #include "registro.h"
+#include "extras.h"
 
 void menu_registro()
 {
     int option=-1;
+    printf("-----------------\n");
+    printf("Registro\n");
+    printf("-----------------\n");
     printf("Que tipo de usuario desea registrar\n");
     printf("0. Salir\n");
     printf("1. Usuario\n");
     printf("2. Artista\n");
+    printf("\nIngrese una opcion: ");
     scanf("%d", &option);
+    while (getchar() != '\n');
 
         switch (option)
         {
@@ -74,11 +80,13 @@ void menu_registro()
             else
             {
                 printf("Artista registrado, bienvenido a Sonus.\n");
+                esperarLimpieza(2);
             }
             mostrar_artistas();
             break;
             }
-
+        default:
+            return;
         }
 }
 //-------------------REGISTRO ARTISTA-------------------------//
@@ -124,6 +132,10 @@ int cargar_artista(Artista *b)
     }
     b->IdArtista= generar_ID_artista();
     //--------------------------//
+    limpiarConsola();
+    printf("-----------------\n");
+    printf("Registro (Artista)\n");
+    printf("-----------------\n");
     do{
      printf("Ingrese su nombre: ");
     scanf(" %49[^\n]", b->nombre);
@@ -154,8 +166,6 @@ int cargar_artista(Artista *b)
     }
     }while (repetido==1);
 
-
-    printf("Artista creado!\n");
     printf("Su ID es: %i \n", b->IdArtista);
 
     return 1;
@@ -282,8 +292,7 @@ Artista* crear_arr_din(int capacidad)
 Usuario* redimensionar_arr(Usuario usuarios[],int* capacidad)
 {
     Usuario* temp;
-    int nueva_capacidad=(*capacidad)+1; // deberia redimensionarse por mas y luego achicarse con los validos, porque sino hace muchas llamadas, en vez de 1, 5.
-    temp=realloc(usuarios,sizeof(Usuario)*nueva_capacidad);
+    int nueva_capacidad=(*capacidad)+1;
     if(temp)
     {
      usuarios=temp;
@@ -314,6 +323,10 @@ int crear_usuario(Usuario usuarios[], int *validos)
     int repetido=0;
     a.idUsuario = generar_ID();
     //--------------------------//
+    limpiarConsola();
+    printf("-----------------\n");
+    printf("Registro (Usuario)\n");
+    printf("-----------------\n");
     do{
     printf("Ingrese el nickname: ");
     scanf("%29s", a.nickname);
@@ -341,6 +354,7 @@ int crear_usuario(Usuario usuarios[], int *validos)
 
     printf("Cargado correctamente!\n");
     printf("Su ID es: %d\n", a.idUsuario);
+    esperarLimpieza(2);
 
     usuarios[*validos]=a;
     (*validos)++;
