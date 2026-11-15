@@ -6,7 +6,7 @@
 #include "artista.h"
 #include "usuario.h"
 
-void menu_usuario()
+void menu_usuario(char nickNameUsuario[])
 {
     int opcion;
     printf("Ingrese Opcion: \n");
@@ -23,32 +23,33 @@ void menu_usuario()
         {
             case 1:
                 {
-                    //llamar funcion
+                    verCatalogoporArtista("Artistas.dat", "Album.dat", "Canciones.dat");
                     break;
                 }
             case 2:
                 {
-                    //llamar funcion
+                    verCancionesPorAlbum("Album.dat", "Canciones.dat");
                     break;
                 }
             case 3:
                 {
-                    //llamar funcion
+                    infoDetalladaCancion("Canciones.dat", "Calificaciones.dat");
                     break;
                 }
             case 4:
                 {
-                    //llamar funcion
+                    calificarCancion("Canciones.dat", "Calificaciones.dat", nickNameUsuario);
                     break;
                 }
             case 5:
                 {
-                    //llamar funcion
+                    verMisCalificaciones("Calificaciones.dat", nickNameUsuario);
                     break;
                 }
             default:
                 {
                     printf("Opcion Incorrecta\n");
+
                 }
             printf("Ingrese Opcion: \n");
             printf("1.Ver Catalogo por Artista \n");
@@ -61,7 +62,7 @@ void menu_usuario()
         }
     }
 }
-FILE *Abrirarchivo(char nombreArchivo[],char modo[])//no creo que haga falta esta funcion
+FILE *Abrirarchivo(const char nombreArchivo[],char modo[])//no creo que haga falta esta funcion
 {
     FILE *archivo=fopen(nombreArchivo,modo);
     return archivo;
@@ -174,7 +175,6 @@ void verCatalogoporArtista(const char nombreArchivoArtistas[],const char nombreA
 }
 Album buscarAlbumTitulo(char albumBuscar[],char nombreArchivo[])
 {
-
     Album noEncontrado;
     noEncontrado.cantidadCanciones=-1;
     FILE *archivo=Abrirarchivo(nombreArchivo,"rb");
@@ -262,64 +262,175 @@ void buscarCancionPorTitulo(Cancion *encontrada,char nombreArchivoCancion[])
     }
     fclose(archivo);
 }
-void infoDetalladaCancion(Cancion *encontrada,char nombreArchivoCancion[],char nombreArchivoCalificacion[])
+void infoDetalladaCancion(char nombreArchivoCancion[],char nombreArchivoCalificacion[])
 {
-    buscarCancionPorTitulo(encontrada,nombreArchivoCancion);
-    mostrarCancion(*encontrada);
-
+    Cancion encontrada;
+    buscarCancionPorTitulo(&encontrada, nombreArchivoCancion);
+    if (encontrada.duracionSegundos == -1)
+    {
+        printf("Cancion no encontrada.\n");
+        return;
+    }
+    mostrarCancion(encontrada);
 }
-int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[])
+int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[],const char nicknameUsuario[])
 {
-    int nuevaPuntuacion = 0;
+    int nuevaPuntuacion;
     printf("Ingrese Nueva Calificacion(1/5): ");
     scanf("%d",&nuevaPuntuacion);
-    while(nuevaPuntuacion<1 || nuevaPuntuacion>5)
+
+    while(nuevaPuntuacion>5 || nuevaPuntuacion<1)
     {
         printf("Ingrese una Calificacion Correcta(1/5) \n");
         scanf("%d",&nuevaPuntuacion);
     }
 
-    FILE *archivo=Abrirarchivo(nombreArchivoCalificacion,"a+b");
+    FILE *archivo=Abrirarchivo(nombreArchivoCalificacion,"r+b");
     if(archivo==NULL)
     {
-        printf("Error al Abrir Archivo\n");
-        return 0;
+        archivo = Abrirarchivo(nombreArchivoCalificacion, "w+b");
+        if (archivo == NULL)
+        {
+            printf("Error al Abrir Archivo\n");
+            return 0;
+        }
     }
 
     Calificacion leer;
-
     int coincide=0;
+
     while(fread(&leer,sizeof(Calificacion),1,archivo)==1)
     {
-        if(strcmp(leer.idCancion, encontrada.idCancion) == 0)
+        if(strcmp(leer.idCancion, encontrada.idCancion) == 0 && strcmp(leer.nicknameUsuario,nicknameUsuario)==0)
         {
             leer.puntuacion=nuevaPuntuacion;
             fseek(archivo,-(long)sizeof(Calificacion),SEEK_CUR);
             fwrite(&leer,sizeof(Calificacion),1,archivo);
+            fclose(archivo);
             return 1;
         }
     }
-    Calificacion nuevaCalificacion;
-    //agregar datos
-    nuevaCalificacion.puntuacion=nuevaPuntuacion;
-    fwrite(&leer,sizeof(Calificacion),1,archivo);
-    return 1;
 
+    Calificacion nuevaCalificacion;
+    strcpy(nuevaCalificacion.nicknameUsuario, nicknameUsuario);
+    strcpy(nuevaCalificacion.idCancion, encontrada.idCancion);
+    nuevaCalificacion.puntuacion=nuevaPuntuacion;
+
+    fseek(archivo,0,SEEK_END);
+    fwrite(&nuevaCalificacion,sizeof(Calificacion),1,archivo);
+    fclose(archivo);
+    return 1;
 }
-void CalificarCancion(char nombreArchivoCancion[],char nombreArchivoCalificacion[])
+void calcularCantidadYSuma(Cancion encontrada,char nombreArchivo[],float *suma, int *cantidad)
+{
+    FILE *archivo = Abrirarchivo(nombreArchivo, "rb");
+    if(archivo==NULL)
+    {
+        printf("No fue posible abrir el Archivo\n");
+        return;
+    }
+
+    Calificacion leer;
+    *suma=0;
+    *cantidad=0;
+
+    while(fread(&leer,sizeof(Calificacion),1,archivo)==1)
+    {
+
+        if(strcmp(leer.idCancion, encontrada.idCancion) == 0)
+        {
+            (*suma)+=leer.puntuacion;
+            (*cantidad)++;
+        }
+    }
+    fclose(archivo);
+}
+
+float calcularPromedio(float suma, int cantidad)
+{
+    if (cantidad <= 0)
+    {
+        return 0;
+    }
+    return suma/(float)cantidad;
+}
+void actualizarPromedioCancion(FILE *archivoCanciones,Cancion encontrada,float suma, int cantidad)
+{
+
+    Cancion leerCancion;
+    rewind(archivoCanciones);
+    while (fread(&leerCancion, sizeof(Cancion), 1, archivoCanciones) == 1)
+    {
+        if (strcmp(leerCancion.idCancion, encontrada.idCancion) == 0)
+        {
+            leerCancion.calificacionPromedio=calcularPromedio(suma,cantidad);
+            fseek(archivoCanciones,-(long)sizeof(Cancion),SEEK_CUR);
+            fwrite(&leerCancion,sizeof(Cancion),1,archivoCanciones);
+            return;
+        }
+    }
+}
+
+void calificarCancion(char nombreArchivoCancion[],char nombreArchivoCalificacion[],const char nickNameUsuario[])
 {
     Cancion encontrada;
     buscarCancionPorTitulo(&encontrada,nombreArchivoCancion);
     if(encontrada.duracionSegundos==-1)
     {
         printf("La cancion no fue Encontrada\n");
-//        fclose(archivo); esto sobra, el archivo nunca se abrió
-        return; //por que existe este return? <- para que no pase a la condicion de abajo supongo.
+        return;
     }
-    if(registrarCalificacion(encontrada,nombreArchivoCalificacion)==1)
+    if(registrarCalificacion(encontrada,nombreArchivoCalificacion,nickNameUsuario)==1)
     {
-        //promedio
+        float suma;
+        int cantidad;
+        calcularCantidadYSuma(encontrada,nombreArchivoCalificacion,&suma,&cantidad);
+
+        FILE *archivoCanciones=Abrirarchivo(nombreArchivoCancion,"r+b");
+        if(archivoCanciones==NULL)
+        {
+            printf("No fue Posible abrir el Archivo\n");
+            return;
+        }
+
+        actualizarPromedioCancion(archivoCanciones,encontrada,suma,cantidad);
+        fclose(archivoCanciones);
+    }
+}
+
+void mostrarCalificacion(Calificacion cal)
+{
+    printf("ID Calificacion: %s\n", cal.idRegistroCal);
+    printf("Usuario: %s\n", cal.nicknameUsuario);
+    printf("Cancion: %s\n", cal.idCancion);
+    printf("Puntuacion: %d / 5\n", cal.puntuacion);
+    printf("\n");
+}
+
+void verMisCalificaciones(const char nombreArchivoCalificacion[], const char nickNameUsuario[])
+{
+    FILE *archivo = Abrirarchivo(nombreArchivoCalificacion, "rb");
+    if (archivo == NULL)
+    {
+        printf("No fue posible abrir el archivo de calificaciones\n");
+        return;
     }
 
+    Calificacion leer;
+    int encontradas = 0;
 
+    while (fread(&leer, sizeof(Calificacion), 1, archivo) == 1)
+    {
+        if (strcmp(leer.nicknameUsuario, nickNameUsuario) == 0)
+        {
+            mostrarCalificacion(leer);
+            encontradas = 1;
+        }
+    }
+
+    if (encontradas==0)
+    {
+        printf("Aun no tenes calificaciones registradas.\n");
+    }
+    fclose(archivo);
 }
