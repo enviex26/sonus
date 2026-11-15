@@ -11,8 +11,8 @@ void menu_usuario()
     printf("Ingrese Opcion: \n");
     printf("1.Ver Catalogo por Artista \n");
     printf("2.Ver Canciones por Album: \n");
-    printf("3.Ver Informacion Detallada de Canci髇\n");
-    printf("4.Calificar Canci髇\n");
+    printf("3.Ver Informacion Detallada de Canci贸n\n");
+    printf("4.Calificar Canci贸n\n");
     printf("5.Ver Mis Calificaciones\n");
     printf("0.Para Finalizar\n");
     scanf("%d",&opcion);
@@ -52,15 +52,15 @@ void menu_usuario()
             printf("Ingrese Opcion: \n");
             printf("1.Ver Catalogo por Artista \n");
             printf("2.Ver Canciones por Album: \n");
-            printf("3.Ver Informacion Detallada de Canci髇\n");
-            printf("4.Calificar Canci髇\n");
+            printf("3.Ver Informacion Detallada de Canci贸n\n");
+            printf("4.Calificar Canci贸n\n");
             printf("5.Ver Mis Calificaciones\n");
             printf("0.Para Finalizar\n");
             scanf("%d",&opcion);
         }
     }
 }
-FILE *Abrirarchivo(char nombreArchivo[],char modo[])
+FILE *Abrirarchivo(char nombreArchivo[],char modo[])//no creo que haga falta esta funcion
 {
     FILE *archivo=fopen(nombreArchivo,modo);
     return archivo;
@@ -194,7 +194,7 @@ Album buscarAlbumTitulo(char albumBuscar[],char nombreArchivo[])
     fclose(archivo);
     return noEncontrado;
 }
-void verCancionesPorAlbum(const char nombreArchivoAlbum[],const char nombreArchivoCancion[])
+void verCancionesPorAlbum(const char nombreArchivoAlbum[],const char nombreArchivoCancion[])//void no necesita un return
 {
     char albumBuscar[100];
     printf("Ingrese Album: ");
@@ -268,7 +268,7 @@ void infoDetalladaCancion(char nombreArchivoCancion[])
     {
         printf("La cancion no fue Encontrada\n");
         fclose(archivo);
-        return;
+        return;//por que existe este return?
     }
 
     mostrarCancion(encontrada);
