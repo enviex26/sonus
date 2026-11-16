@@ -13,7 +13,7 @@ void menu_usuario(char nickNameUsuario[]);
 Artista buscarArtistaPorNombre(char artistaBuscar[], const char nombreArchivo[]);
 void mostrarAlbum(Album alb);
 void mostrarCancion(Cancion can);
-void buscarCancionPorAlbum(FILE *archivoCancion, Cancion *encontrada, char idAlbum[]);
+void buscarCancionPorAlbum(FILE *archivoCancion, Cancion *encontrada, int idAlbum);
 void verCatalogoporArtista(const char nombreArchivoArtistas[], const char nombreArchivoAlbum[], const char nombreArchivoCancion[]);
 Album buscarAlbumTitulo(char albumBuscar[], char nombreArchivo[]);
 void verCancionesPorAlbum(const char nombreArchivoAlbum[], const char nombreArchivoCancion[]);
