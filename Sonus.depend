@@ -52,16 +52,17 @@
 
 1794680294 d:\gonza\documentos\github\sonus\registro.h
 
-1794777327 d:\gonza\documentos\github\sonus\login.h
+1794870077 d:\gonza\documentos\github\sonus\login.h
 	"registro.h"
 
-1794777327 source:d:\gonza\documentos\github\sonus\login.c
+1794870076 source:d:\gonza\documentos\github\sonus\login.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"login.h"
 	"registro.h"
 	"extras.h"
+	"artista.h"
 
 1794777327 source:d:\gonza\documentos\github\sonus\registro.c
 	<stdio.h>
@@ -71,7 +72,7 @@
 	"registro.h"
 	"extras.h"
 
-1794778525 source:d:\gonza\documentos\github\sonus\usuario.c
+1794870273 source:d:\gonza\documentos\github\sonus\usuario.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -80,9 +81,9 @@
 	"artista.h"
 	"usuario.h"
 
-1794704109 d:\gonza\documentos\github\sonus\artista.h
+1794870076 d:\gonza\documentos\github\sonus\artista.h
 
-1794776758 d:\gonza\documentos\github\sonus\usuario.h
+1794870012 d:\gonza\documentos\github\sonus\usuario.h
 
 1794777327 d:\gonza\documentos\github\sonus\extras.h
 
@@ -108,4 +109,13 @@
 1794838172 /Users/mateoymargui/Documents/GitHub/sonus/artista.h
 
 1794828204 /Users/mateoymargui/Documents/GitHub/sonus/usuario.h
+
+1794870076 source:d:\gonza\documentos\github\sonus\artista.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"login.h"
+	"registro.h"
+	"artista.h"
+	"usuario.h"
 
