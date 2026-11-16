@@ -88,7 +88,7 @@ Artista buscarArtistaPorNombre(char artistaBuscar[],const char nombreArchivo[])
 }
 void mostrarAlbum(Album alb)
 {
-    printf("ID Album: %d\n", alb.idAlbum);
+    printf("ID Album: %s\n", alb.idAlbum);
     printf("Artista: %s\n", alb.artista.nombre);
     printf("Titulo: %s\n", alb.titulo);
     printf("Anio de Lanzamiento: %d\n", alb.anioLanzamiento);
@@ -97,22 +97,22 @@ void mostrarAlbum(Album alb)
 }
 void mostrarCancion(Cancion can)
 {
-    printf("ID Cancion: %d\n", can.idCancion);
+    printf("ID Cancion: %s\n", can.idCancion);
     printf("Titulo: %s\n", can.titulo);
-    printf("Album: %d\n", can.idAlbum);
-    printf("Artista: %d\n", can.idArtista);
+    printf("Album: %s\n", can.idAlbum);
+    printf("Artista: %s\n", can.idArtista);
     printf("Duracion: %d segundos\n", can.duracionSegundos);
     printf("Calificacion Promedio: %.2f / 5.0\n", can.calificacionPromedio);
     printf("\n");
 }
-void buscarCancionPorAlbum(FILE *archivoCancion,Cancion *encontrada,int idAlbum)
+void buscarCancionPorAlbum(FILE *archivoCancion,Cancion *encontrada,char idAlbum[])
 {
     Cancion leerCancion;
     encontrada->duracionSegundos = -1;
 
     while (fread(&leerCancion, sizeof(Cancion), 1, archivoCancion) == 1)
     {
-        if (leerCancion.idAlbum == idAlbum)
+        if (strcmp(leerCancion.idAlbum, idAlbum) == 0)
         {
             *encontrada = leerCancion;
             return;
@@ -217,7 +217,7 @@ void verCancionesPorAlbum(const char nombreArchivoAlbum[],const char nombreArchi
     printf("Canciones:\n");
     while (fread(&leerCancion, sizeof(Cancion), 1, archivoCancion) == 1)
     {
-        if (leerCancion.idAlbum == albumEncontrado.idAlbum)
+        if (strcmp(leerCancion.idAlbum, albumEncontrado.idAlbum) == 0)
         {
             mostrarCancion(leerCancion);
             encontradas = 1;
@@ -299,7 +299,7 @@ int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[],co
     while(fread(&leer,sizeof(Calificacion),1,archivo)==1)
     {
         totalRegistros++;
-        if(leer.idCancion == encontrada.idCancion && strcmp(leer.nicknameUsuario,nicknameUsuario)==0)
+        if(strcmp(leer.idCancion, encontrada.idCancion) == 0 && strcmp(leer.nicknameUsuario,nicknameUsuario)==0)
         {
             leer.puntuacion=nuevaPuntuacion;
             fseek(archivo,-(long)sizeof(Calificacion),SEEK_CUR);
@@ -312,7 +312,7 @@ int registrarCalificacion(Cancion encontrada,char nombreArchivoCalificacion[],co
     Calificacion nuevaCalificacion;
     nuevaCalificacion.idRegistroCal=totalRegistros;
     strcpy(nuevaCalificacion.nicknameUsuario, nicknameUsuario);
-    nuevaCalificacion.idCancion = encontrada.idCancion;
+    strcpy(nuevaCalificacion.idCancion, encontrada.idCancion);
     nuevaCalificacion.puntuacion=nuevaPuntuacion;
 
 
@@ -336,7 +336,7 @@ void calcularCantidadYSuma(Cancion encontrada,char nombreArchivo[],float *suma, 
     while(fread(&leer,sizeof(Calificacion),1,archivo)==1)
     {
 
-        if(leer.idCancion == encontrada.idCancion)
+        if(strcmp(leer.idCancion, encontrada.idCancion) == 0)
         {
             (*suma)+=leer.puntuacion;
             (*cantidad)++;
@@ -344,6 +344,7 @@ void calcularCantidadYSuma(Cancion encontrada,char nombreArchivo[],float *suma, 
     }
     fclose(archivo);
 }
+
 float calcularPromedio(float suma, int cantidad)
 {
     if (cantidad <= 0)
@@ -359,7 +360,7 @@ void actualizarPromedioCancion(FILE *archivoCanciones,Cancion encontrada,float s
     rewind(archivoCanciones);
     while (fread(&leerCancion, sizeof(Cancion), 1, archivoCanciones) == 1)
     {
-        if (leerCancion.idCancion == encontrada.idCancion)
+        if (strcmp(leerCancion.idCancion, encontrada.idCancion) == 0)
         {
             leerCancion.calificacionPromedio=calcularPromedio(suma,cantidad);
             fseek(archivoCanciones,-(long)sizeof(Cancion),SEEK_CUR);
@@ -368,6 +369,7 @@ void actualizarPromedioCancion(FILE *archivoCanciones,Cancion encontrada,float s
         }
     }
 }
+
 void calificarCancion(char nombreArchivoCancion[],char nombreArchivoCalificacion[],const char nickNameUsuario[])
 {
     Cancion encontrada;
@@ -394,14 +396,16 @@ void calificarCancion(char nombreArchivoCancion[],char nombreArchivoCalificacion
         fclose(archivoCanciones);
     }
 }
+
 void mostrarCalificacion(Calificacion cal)
 {
-    printf("ID Calificacion: %d\n", cal.idRegistroCal);
+    printf("ID Calificacion: %s\n", cal.idRegistroCal);
     printf("Usuario: %s\n", cal.nicknameUsuario);
-    printf("Cancion: %d\n", cal.idCancion);
+    printf("Cancion: %s\n", cal.idCancion);
     printf("Puntuacion: %d / 5\n", cal.puntuacion);
     printf("\n");
 }
+
 void verMisCalificaciones(const char nombreArchivoCalificacion[], const char nickNameUsuario[])
 {
     FILE *archivo = fopen(nombreArchivoCalificacion, "rb");
