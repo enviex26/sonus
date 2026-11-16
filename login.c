@@ -24,7 +24,13 @@ int menuLogin() {
             return 1; // los return son para que vuelva al menu anterior
 
         case 2:
-            inicioSesionArtista();
+            int id_log=-1;
+            inicioSesionArtista(&id_log);
+            if(id_log==-1)
+            {
+                printf("ERROR en el login");
+            }
+            menu_artista(id_log);
             return 1;
 
         default:
@@ -149,7 +155,7 @@ int verificarContraseniaArtista(char filename[], char contrasenia[], char nickna
 }
 
 
-void inicioSesionArtista() {
+void inicioSesionArtista(int* id_log) {
 
     char nickname[30];
     char contrasenia[20];
@@ -174,6 +180,38 @@ void inicioSesionArtista() {
         scanf("%s", contrasenia);
     } while(verificarContraseniaArtista("artistas.bin", contrasenia, nickname) == 0);
 
+    int id_encontrado=buscar_id(nickname);
+
+    if(id_encontrado<0){
+            printf("Error buscando ID. \n");
+            return;
+    }
+
+    (*id_log)=id_encontrado;
+
     fclose(buffer);
+}
+int buscar_id(char nickname[])
+{
+    int id_buscado=0;
+
+    FILE *buffer = fopen(filename, "rb");
+
+    if (!buffer) return -1;
+
+    Artista art;
+
+
+    while (fread(&art, sizeof(Artista), 1, buffer) == 1) {
+        if (strcmp(art.nickname, nickname)==0)
+        {
+            id_buscado=art.idArtista;
+            fclose(buffer);
+            return id_buscado;
+        }
+    }
+
+    fclose(buffer);
+    return id_buscado;
 }
 

@@ -1,0 +1,241 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "login.h"
+#include "registro.h"
+#include "artista.h"
+#include "usuario.h"
+
+void menu_artista(int id_Artista_ing)
+{
+    int opcion;
+
+    while(opcion!=0)
+    {
+        printf("Ingrese una opcion: \n");
+        printf("1.Canciones. \n");
+        printf("2.Albumes. \n");
+        printf("0.Para Finalizar. \n");
+        scanf("%d",&opcion);
+        switch(opcion)
+        {
+        case 0:
+            {
+                return;
+            }
+            case 1:
+                {
+                    char option;
+                    printf("Ingrese una opcion: \n");
+                    printf("a. Agregar Cancion. \n");
+                    printf("b. Modificar Cancion. \n");
+                    scanf(" %c", &option);
+                    switch(option)
+                    {
+                        case 'a':
+                            {
+                                Cancion c;
+                                int exito=agregar_cancion(&c, id_Artista_ing);
+                                if(exito==-1)
+                                {
+                                    printf("No se pudo ingresar la cancion.");
+                                    return;
+                                }
+                                break;
+                            }
+                        case 'b':
+                            {
+                                //modificar_cancion();
+                                break;
+                            }
+                        default:
+                            {
+                                printf("Opcion invalida.\n");
+                                break;
+                            }
+                    }//Finaliza Switch Interno
+
+                    //Primer Switch
+                    break;
+                }
+            case 2:
+                {
+
+                    break;
+                }
+            default:
+                {
+                    printf("Opcion Incorrecta\n");
+
+                }
+        }
+    }
+}
+
+int agregar_cancion(Cancion* c, int id_Artista_ing)
+{
+    int repetido=0;
+    if(generar_ID_cancion()==-1)
+    {
+        printf("ERROR en el ID.\n");
+        return -1;
+    }
+    int exito=generar_ID_cancion();
+    //-------------------//
+    char titulo_ing [100];
+     printf("Ingrese el titulo: ");
+    scanf(" %99[^\n]", titulo_ing);
+    //--------------------------//
+    char opcion;
+    int id_ingresado;
+    int encontrado;
+    do{
+    printf("Ingrese el ID del album: ");
+    scanf("%i", &id_ingresado);
+    encontrado=buscar_id(id_ingresado);
+    if(encontrado=-2)
+    {
+        printf("Error en la busqueda.\n");
+        return -1;
+    }
+    if(encontrado==-1)
+    {
+        printf("Album no encontrado.\n");
+    }
+
+    printf("Desea ingresar la cancion a este album? s/n. \n");
+    scanf(" %c", &opcion);
+
+    if(opcion=='s'||opcion=='S')
+    {
+        exito==1;
+    }
+
+    }while((opcion!='s')||(opcion!='S')||(encontrado==-1));
+
+    int duracionSegundos;
+    do{
+    printf("Ingrese su duracion en segundos(Mayor a 40): ");
+    scanf("%i", &duracionSegundos);
+    }while (duracionSegundos<40);
+
+    if(exito>-1)
+    {
+        c->idCancion= generar_ID_cancion();
+        strcpy(c->titulo,titulo_ing);
+        c->idAlbum=id_ingresado;
+        c->idArtista=id_Artista_ing;
+        c->duracionSegundos=duracionSegundos;
+        c->calificacionPromedio=0.00;
+    }
+
+    printf("La ID de su cancion es: %i \n", c->idCancion);
+
+    return 1;
+}
+int buscar_id(int id_ingresado)
+{
+    int encontrado=-1;
+
+    FILE* archivo=fopen("Albumes.dat","rb");
+
+    if(!archivo)
+        return -2;
+
+    Album aux;
+
+    while(fread(&aux,sizeof(Album),1,archivo)==1)
+    {
+        if(aux.idAlbum==id_ingresado)
+        {
+            mostrarAlbum(aux);
+            encontrado=1;
+        }
+    }
+
+    fclose(archivo);
+    return encontrado;
+}
+int generar_ID_cancion()
+{
+     int repetido=0;
+    int nuevoID=0;
+
+    int verificacion=0;
+    FILE*archivo=fopen("Canciones.dat","rb");
+    if(!archivo)
+    {
+        verificacion=crear_archivo("Canciones.dat");
+        if(verificacion==-1)
+        {
+         printf("Error en la creacion del archivo.\n");
+         return -1;
+        }
+
+    }
+    if(verificacion==1)
+    {
+        printf("Archivo creado con exito!\n");
+        archivo=fopen("Canciones.dat","rb");
+        if(!archivo){
+            printf("ERROR en la lectura del archivo.\n");
+            return -1;
+        }
+    }
+
+    fseek(archivo,0L,SEEK_END);
+    long bytes=ftell(archivo);
+    long cantidad=bytes/sizeof(Cancion);
+
+    if(cantidad>0)
+    {
+    fseek(archivo,-(long)sizeof(Cancion),SEEK_END);
+    Cancion aux;
+    int leido= fread(&aux,sizeof(Cancion),1,archivo);
+        if(leido!=1)
+        {
+            printf("ERROR, en la ultima lectura del archivo.\n");
+            fclose(archivo);
+            return -1;
+        }
+        nuevoID=(aux.idCancion);
+            do{
+               nuevoID= nuevoID + 1;
+               repetido=corroborar_ID_cancion(nuevoID);
+
+               if(repetido==-1)
+               {
+                 fclose(archivo);
+                return-1;
+               }
+
+
+            }while(repetido==1);
+
+    }
+    if(cantidad<0)
+        printf("ERROR, en la busqueda de archivos");
+
+    fclose(archivo);
+
+    return nuevoID;
+}
+int corroborar_ID_cancion(int ID_ingresado)
+{
+    int repetido=0;
+    FILE*archivo=fopen("Canciones.dat","rb");
+    if(!archivo)
+    {
+        printf("Error de apertura de archivo en el ID");
+        return -1;
+    }
+    Cancion aux;
+    while(fread(&aux,sizeof(Cancion),1,archivo)==1)
+    {
+        if(aux.idCancion==ID_ingresado)
+            repetido=1;
+    }
+
+    fclose(archivo);
+    return repetido;
+}
