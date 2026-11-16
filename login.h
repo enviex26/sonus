@@ -9,6 +9,7 @@ int verificarContraseniaUsuario(char filename[], char contrasenia[], char nickna
 void inicioSesionUsuario();
 
 // -- FUNCIONES ARTISTA --
+int buscar_id_artista(char nickname[]);
 int verificarArtistaExiste(char filename[], char nickname[]);
 int verificarContraseniaArtista(char filename[], char contrasenia[], char nickname[]);
 void inicioSesionArtista();

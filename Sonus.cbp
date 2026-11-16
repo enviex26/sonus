@@ -31,6 +31,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="artista.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="artista.h" />
 		<Unit filename="login.c">
 			<Option compilerVar="CC" />
