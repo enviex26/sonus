@@ -4,7 +4,7 @@
 typedef struct stCalificacion {
  int idRegistroCal;
  char nicknameUsuario[30];
- char idCancion[10];
+ int idCancion;
  int puntuacion;
 } Calificacion;
 
