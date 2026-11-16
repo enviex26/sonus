@@ -4,6 +4,7 @@
 #include "login.h"
 #include "registro.h"
 #include "extras.h"
+#include "artista.h"
 
 // ---------- MENU ----------
 int menuLogin() {
@@ -180,10 +181,11 @@ void inicioSesionArtista(int* id_log) {
         scanf("%s", contrasenia);
     } while(verificarContraseniaArtista("artistas.bin", contrasenia, nickname) == 0);
 
-    int id_encontrado=buscar_id(nickname);
+    int id_encontrado=buscar_id_artista(nickname);
 
-    if(id_encontrado<0){
+    if(id_encontrado==-1){
             printf("Error buscando ID. \n");
+            fclose(buffer);
             return;
     }
 
@@ -191,11 +193,11 @@ void inicioSesionArtista(int* id_log) {
 
     fclose(buffer);
 }
-int buscar_id(char nickname[])
+int buscar_id_artista(char nickname[])
 {
     int id_buscado=0;
 
-    FILE *buffer = fopen(filename, "rb");
+    FILE *buffer = fopen("Artistas.dat", "rb");
 
     if (!buffer) return -1;
 
@@ -205,7 +207,7 @@ int buscar_id(char nickname[])
     while (fread(&art, sizeof(Artista), 1, buffer) == 1) {
         if (strcmp(art.nickname, nickname)==0)
         {
-            id_buscado=art.idArtista;
+            id_buscado=art.IdArtista;
             fclose(buffer);
             return id_buscado;
         }

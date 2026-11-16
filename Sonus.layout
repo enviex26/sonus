@@ -2,35 +2,66 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="usuario.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+	<File name="login.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="6" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="11948" topLine="0" />
+			<Cursor1 position="5209" topLine="195" />
+		</Cursor>
+	</File>
+	<File name="usuario.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="4" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="334" topLine="0" />
 		</Cursor>
 		<Folding>
-			<Collapse line="9" />
 			<Collapse line="65" />
 			<Collapse line="89" />
 			<Collapse line="98" />
 			<Collapse line="108" />
+			<Collapse line="122" />
+			<Collapse line="171" />
 			<Collapse line="193" />
+			<Collapse line="233" />
 			<Collapse line="262" />
 			<Collapse line="273" />
 			<Collapse line="323" />
-			<Collapse line="347" />
-			<Collapse line="355" />
-			<Collapse line="371" />
-			<Collapse line="397" />
-			<Collapse line="405" />
+			<Collapse line="348" />
+			<Collapse line="356" />
+			<Collapse line="373" />
+			<Collapse line="400" />
+			<Collapse line="409" />
 		</Folding>
+	</File>
+	<File name="login.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="9" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="343" topLine="0" />
+		</Cursor>
 	</File>
 	<File name="usuario.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="154" topLine="0" />
+			<Cursor1 position="296" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="artista.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="artista.c" open="1" top="1" tabpos="9" split="0" active="1" splitpos="0" zoom_1="5" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="335" topLine="0" />
+			<Cursor1 position="0" topLine="132" />
+		</Cursor>
+		<Folding>
+			<Collapse line="226" />
+			<Collapse line="287" />
+			<Collapse line="310" />
+			<Collapse line="317" />
+			<Collapse line="320" />
+			<Collapse line="327" />
+			<Collapse line="330" />
+			<Collapse line="341" />
+			<Collapse line="346" />
+			<Collapse line="352" />
+			<Collapse line="357" />
+			<Collapse line="374" />
+		</Folding>
+	</File>
+	<File name="registro.c" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6470" topLine="238" />
 		</Cursor>
 	</File>
 	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -38,24 +69,14 @@
 			<Cursor1 position="88" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="login.c" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="924" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="registro.c" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="artista.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="login.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="174" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="registro.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="-2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1302" topLine="0" />
+			<Cursor1 position="1292" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

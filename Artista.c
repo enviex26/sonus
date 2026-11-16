@@ -25,10 +25,16 @@ void menu_artista(int id_Artista_ing)
             }
             case 1:
                 {
+
+                    break;
+                }
+
+            case 2:
+                {
                     char option;
                     printf("Ingrese una opcion: \n");
                     printf("a. Agregar Cancion. \n");
-                    printf("b. Modificar Cancion. \n");
+                    printf("b. Modificar Cancion (Solo tus canciones). \n");
                     scanf(" %c", &option);
                     switch(option)
                     {
@@ -45,7 +51,7 @@ void menu_artista(int id_Artista_ing)
                             }
                         case 'b':
                             {
-                                //modificar_cancion();
+                                modificar_cancion(id_Artista_ing);
                                 break;
                             }
                         default:
@@ -58,11 +64,7 @@ void menu_artista(int id_Artista_ing)
                     //Primer Switch
                     break;
                 }
-            case 2:
-                {
 
-                    break;
-                }
             default:
                 {
                     printf("Opcion Incorrecta\n");
@@ -71,7 +73,156 @@ void menu_artista(int id_Artista_ing)
         }
     }
 }
+//-------FUNCIONES MODIFICAR CANCION--------//
+void modificar_cancion(int id_logeado)
+{
+    mostrar_canciones_logeado(id_logeado);
+    int id_ing;
+    int encontrado=0;
+    do{
+     printf("Que cancion desea modificar? Ingrese el ID:  ");
+    scanf("%i", &id_ing);
+    encontrado=buscar_cancion_ID(id_ing,id_logeado);
+    if(encontrado==-1)
+    {
+     printf("Error en la busqueda de la cancion.\n");
+     return;
+    }
+    if(encontrado==0)
+    {
+     printf("Cancion no encontrada.\n");
+    }
+    }while(encontrado==0);
 
+    int modificado=modificar_cancion_archivo(id_ing);
+
+    if(modificado==-1)
+    {
+        printf("Error en la modificacion.\n");
+        return;
+    }
+    if(modificado==0)
+    {
+        printf("Ningun cambio realizado.\n");
+        return;
+    }
+
+
+}
+int modificar_cancion_archivo(int id_ing)
+{
+    FILE*archivo=fopen("Canciones.dat","rb+");
+
+    if(!archivo)return -1;
+
+    Cancion aux;
+
+    while(fread(&aux,sizeof(Cancion),1,archivo)==1)
+    {
+        if(aux.idCancion==id_ing)
+        {
+            int opcion=-1;
+            int modificado=0;
+            while(opcion!=0)
+            {
+                printf("Que desea cambiar?: \n");
+                printf("1. Titulo. \n");
+                printf("2. Duracion.\n");
+                scanf("%d", &opcion);
+                switch(opcion)
+                {
+                case 1:
+                    {
+                    printf("Ingrese el titulo nuevo: ");
+                    scanf(" %99[^\n]", aux.titulo);
+                    modificado=1;
+                    break;
+                    }
+                case 2:
+                    {
+                    printf("Ingrese la duracion: \n");
+                    scanf("%i", &aux.duracionSegundos);
+                    modificado=1;
+                    break;
+                    }
+
+                case 0:
+                    {
+                    break;
+                    }
+                default:
+                    {
+                     printf("Opcion invalida.\n");
+                        break;
+                    }
+                }
+                if(modificado==1)
+                {
+                    if(fseek(archivo,-(long)sizeof(Cancion),SEEK_CUR)==0)
+                    {
+                        int escrito=fwrite(&aux,sizeof(Cancion),1,archivo);
+                        if(escrito!=1)
+                        {
+                            printf("ERROR en la escritura al archivo.\n");
+                            fclose(archivo);
+                            return -1;
+                        }
+
+                        printf("Cancion modificada con exito!");
+                        fclose(archivo);
+                        return 1;
+                    }
+                }
+
+            }
+        }
+    }
+    fclose(archivo);
+    return 0;
+}
+int buscar_cancion_ID(int id_ing, int id_logeado)
+{
+    int encontrado=0;
+    FILE*archivo=fopen("Canciones.dat","rb+");
+
+    if(!archivo)
+        return -1;
+    Cancion aux;
+    while(fread(&aux,sizeof(Cancion),1,archivo)==1)
+    {
+     if(aux.idCancion==id_ing)
+     {
+         encontrado=1;
+         printf("Cancion encontrada! \n");
+         if(aux.idArtista!=id_logeado)
+         {
+             printf("Usted no tiene permisos para editar esta cancion.");
+             fclose(archivo);
+             return -1;
+         }
+         return encontrado;
+     }
+    }
+
+    fclose(archivo);
+    return encontrado;
+}
+void mostrar_canciones_logeado(int id_logeado)
+{
+    FILE*archivo=fopen("Canciones.dat","rb");
+
+    if(!archivo)
+        return;
+
+    Cancion aux;
+    while(fread(&aux,sizeof(Cancion),1,archivo)==1)
+    {
+        if(aux.idArtista==id_logeado)
+        mostrarCancion(aux);
+    }
+    fclose(archivo);
+}
+//-------FUNCIONES CREAR CANCION------------//
 int agregar_cancion(Cancion* c, int id_Artista_ing)
 {
     int repetido=0;
@@ -93,7 +244,7 @@ int agregar_cancion(Cancion* c, int id_Artista_ing)
     printf("Ingrese el ID del album: ");
     scanf("%i", &id_ingresado);
     encontrado=buscar_id(id_ingresado);
-    if(encontrado=-2)
+    if(encontrado==-2)
     {
         printf("Error en la busqueda.\n");
         return -1;
@@ -108,10 +259,10 @@ int agregar_cancion(Cancion* c, int id_Artista_ing)
 
     if(opcion=='s'||opcion=='S')
     {
-        exito==1;
+        exito=1;
     }
 
-    }while((opcion!='s')||(opcion!='S')||(encontrado==-1));
+    }while((opcion!='s' && opcion!='S')||(encontrado==-1));
 
     int duracionSegundos;
     do{
