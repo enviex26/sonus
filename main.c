@@ -3,53 +3,18 @@
 #include "registro.h"
 #include "login.h"
 #include "extras.h"
-#include "reportes.h"
 #include "menus.h"
+
 int main(void){
-    int option = 0;
     char sesionNickname[30] = "";
-// EN LOS CASES, AGREGAR OTRO MENU PARA LAS FUNCIONALIDADES
-// QUE SOLO SEA ACCESIBLE SI EL USUARIO INICIO SESIÓN
+    int option = 1;
 
-    do {
-        limpiarConsola();
-        printf("------------\n");
-        if (sesionNickname[0] != '\0')
-            printf("Bienvenido a Sonus! (Sesion iniciada como: %s)\n", sesionNickname);
-        else
-            printf("Bienvenido a Sonus!\n");
-        printf("------------\n");
-        printf("Que desea hacer?\n");
-        printf("0. Salir\n1. Iniciar Sesion\n2. Registro\n3. Reportes\nIngrese una opcion: ");
-        scanf("%d", &option);
-
-
-        switch(option) {
-
-        case 1:
-            {
-            limpiarConsola();
-            menuLogin(sesionNickname);
-            break;
-            }
-        case 2:
-            {
-             limpiarConsola();
-            menu_registro(sesionNickname);
-            break;
-            }
-        case 3:
-            {
-                limpiarConsola();
-                menu_reportes();
-            }
-
-        default:
-            return 0;
-
+    while(option) {
+        if (sesionNickname[0] == '\0') {
+            option = menuInicial(sesionNickname);
+        } else {
+            option = menuSesionIniciada(sesionNickname);
         }
-    } while (option);
-
-
-
+    }
+    return 0;
 }

@@ -7,6 +7,7 @@
 #include "usuario.h"
 #include "login.h"
 #include "menus.h"
+#include "reportes.h"
 
 static int tipoSesion = 0;
 static int sesionIdArtista = -1;
@@ -16,9 +17,9 @@ int menuInicial(char sesionNickname[]) {
 
     do {
         limpiarConsola();
-        printf("------------\n");
+        printf("-----------------\n");
         printf("Bienvenido a Sonus!\n");
-        printf("------------\n");
+        printf("-----------------\n");
         printf("Que desea hacer?\n");
         printf("1. Iniciar Sesion\n2. Registro\n0. Salir\n\nIngrese una opcion: ");
         scanf("%d", &option);
@@ -49,11 +50,11 @@ int menuSesionIniciada(char sesionNickname[]) {
 
     do {
         limpiarConsola();
-        printf("------------\n");
+        printf("-----------------\n");
         printf("Bienvenido a Sonus, %s!\n", sesionNickname);
-        printf("------------\n");
+        printf("-----------------\n");
         printf("Que desea hacer?\n");
-        printf("1. Menu Principal\n2. Cerrar Sesion\n0. Salir\n\nIngrese una opcion: ");
+        printf("1. Menu Principal\n2. Reportes\n3. Cerrar Sesion\n0. Salir\n\nIngrese una opcion: ");
         scanf("%d", &option);
 
 
@@ -71,6 +72,11 @@ int menuSesionIniciada(char sesionNickname[]) {
             return 1;
 
         case 2:
+            limpiarConsola();
+            menu_reportes();
+            return 1;
+
+        case 3:
             limpiarConsola();
             sesionNickname[0] = '\0';
             return 1;
@@ -91,7 +97,7 @@ int menuLogin(char sesionNickname[]) {
         printf("Inicio de sesion\n");
         printf("-----------------\n");
         printf("Con que tipo de usuario desea iniciar sesion?\n");
-        printf("0. Salir\n1. Usuario\n2. Artista\n\nIngrese una opcion: ");
+        printf("1. Usuario\n2. Artista\n0. Salir\n\nIngrese una opcion: ");
 
         scanf("%d", &option);
         while (getchar() != '\n');
@@ -234,8 +240,8 @@ void menu_usuario(char nickNameUsuario[])
         printf("Menu Principal (Usuario)\n");
         printf("-----------------\n");
         printf("1. Ver Catalogo por Artista \n");
-        printf("2. Ver Canciones por Album: \n");
-        printf("3. Ver Informacion Detallada de Canci—n\n");
+        printf("2. Ver Canciones por Album \n");
+        printf("3. Ver Informacion Detallada de Cancion\n");
         printf("4. Calificar Cancion\n");
         printf("5. Ver Mis Calificaciones\n");
         printf("0. Salir\n");
@@ -275,20 +281,8 @@ void menu_usuario(char nickNameUsuario[])
                     printf("Opcion Incorrecta\n");
                     break;
                 }
-<<<<<<< HEAD
 
         }
-            printf("Ingrese Opcion: \n");
-            printf("1.Ver Catalogo por Artista \n");
-            printf("2.Ver Canciones por Album: \n");
-            printf("3.Ver Informacion Detallada de Canci—n\n");
-            printf("4.Calificar Canci—n\n");
-            printf("5.Ver Mis Calificaciones\n");
-            printf("0.Para Finalizar\n");
-            scanf("%d",&opcion);
-=======
-        }
->>>>>>> cdd742114d961b998e1b73384c80671b136954c5
     }
 }
 
@@ -481,18 +475,16 @@ void menu_reportes()
 
     do
     {
-        limpiarConsola();
+        printf("-----------------\n");
+        printf("Menu de Reportes\n");
+        printf("-----------------\n");
 
-        printf("\n-----------------------------\n");
-        printf("       MENU DE REPORTES       \n");
-        printf("-----------------------------\n");
         printf("1. Top 10 Canciones\n");
         printf("2. Albumes Recientes\n");
         printf("3. Artista Mas Calificado\n");
         printf("4. Usuario Mas Activo\n");
         printf("0. Salir\n");
-        printf("-----------------------------\n");
-        printf("Ingrese opcion: ");
+        printf("\nIngrese una opcion: ");
 
         if(scanf("%d", &opcion) != 1)
         {
