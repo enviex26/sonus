@@ -8,8 +8,9 @@ typedef struct stCalificacion {
  int puntuacion;
 } Calificacion;
 
-
+//----------------------PROTOTIPADOS--------------------------------------------------//
 void menu_usuario(char nickNameUsuario[]);
+//----------------------FUNCIONES USUARIO---------------------------------------------//
 Artista buscarArtistaPorNombre(char artistaBuscar[], const char nombreArchivo[]);
 void mostrarAlbum(Album alb);
 void mostrarCancion(Cancion can);
@@ -26,5 +27,5 @@ void actualizarPromedioCancion(FILE *archivoCanciones, Cancion encontrada, float
 void calificarCancion(char nombreArchivoCancion[], char nombreArchivoCalificacion[],const char nickNameUsuario[]);
 void mostrarCalificacion(Calificacion cal);
 void verMisCalificaciones(const char nombreArchivoCalificacion[], const char nickNameUsuario[]);
-
+//---------------------------------------------------------------------------------//
 #endif
