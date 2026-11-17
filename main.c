@@ -3,6 +3,7 @@
 #include "registro.h"
 #include "login.h"
 #include "extras.h"
+#include "reportes.h"
 int main(void){
     int option = 0;
     char sesionNickname[30] = "";
@@ -25,14 +26,22 @@ int main(void){
         switch(option) {
 
         case 1:
+            {
             limpiarConsola();
             menuLogin(sesionNickname);
             break;
-
+            }
         case 2:
-            limpiarConsola();
+            {
+             limpiarConsola();
             menu_registro(sesionNickname);
             break;
+            }
+        case 3:
+            {
+                limpiarConsola();
+                menu
+            }
 
         default:
             return 0;
