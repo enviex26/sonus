@@ -5,6 +5,7 @@
 #include "registro.h"
 #include "artista.h"
 #include "usuario.h"
+#include "funcionesTomas.h"
 
 void menu_usuario(char nickNameUsuario[])
 {
@@ -15,6 +16,7 @@ void menu_usuario(char nickNameUsuario[])
     printf("3.Ver Informacion Detallada de Canción\n");
     printf("4.Calificar Canción\n");
     printf("5.Ver Mis Calificaciones\n");
+    printf("6.Mostrar top 10 canciones\n");
     printf("0.Para Finalizar\n");
     scanf("%d",&opcion);
     while(opcion!=0)
@@ -44,6 +46,16 @@ void menu_usuario(char nickNameUsuario[])
             case 5:
                 {
                     verMisCalificaciones("Calificaciones.dat", nickNameUsuario);
+                    break;
+                }
+            case 6:
+                {
+                    int validos;
+                    Cancion *arregloCanciones=arregloTop(archivoCanciones,&validos);
+                    for(int i=0;validos>i;i++)
+                    {
+                        mostrarCancion(arregloCanciones[i]);
+                    }
                     break;
                 }
             default:
