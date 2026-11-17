@@ -6,68 +6,9 @@
 #include "artista.h"
 #include "usuario.h"
 #include "extras.h"
+#include "menus.h"
 
-void menu_usuario(char nickNameUsuario[])
-{
-    int opcion;
-    limpiarConsola();
-    printf("-----------------\n");
-    printf("Menu Principal (Usuario)\n");
-    printf("-----------------\n");
-    printf("Ingrese Opcion: \n");
-    printf("0.Salir\n");
-    printf("1.Ver Catalogo por Artista \n");
-    printf("2.Ver Canciones por Album: \n");
-    printf("3.Ver Informacion Detallada de Canción\n");
-    printf("4.Calificar Canción\n");
-    printf("5.Ver Mis Calificaciones\n");
 
-    scanf("%d",&opcion);
-    while(opcion!=0)
-    {
-        switch(opcion)
-        {
-            case 1:
-                {
-                    verCatalogoporArtista("Artistas.dat", "Album.dat", "Canciones.dat");
-                    break;
-                }
-            case 2:
-                {
-                    verCancionesPorAlbum("Album.dat", "Canciones.dat");
-                    break;
-                }
-            case 3:
-                {
-                    infoDetalladaCancion("Canciones.dat", "Calificaciones.dat");
-                    break;
-                }
-            case 4:
-                {
-                    calificarCancion("Canciones.dat", "Calificaciones.dat", nickNameUsuario);
-                    break;
-                }
-            case 5:
-                {
-                    verMisCalificaciones("Calificaciones.dat", nickNameUsuario);
-                    break;
-                }
-            default:
-                {
-                    printf("Opcion Incorrecta\n");
-
-                }
-            printf("Ingrese Opcion: \n");
-            printf("1.Ver Catalogo por Artista \n");
-            printf("2.Ver Canciones por Album: \n");
-            printf("3.Ver Informacion Detallada de Canción\n");
-            printf("4.Calificar Canción\n");
-            printf("5.Ver Mis Calificaciones\n");
-            printf("0.Para Finalizar\n");
-            scanf("%d",&opcion);
-        }
-    }
-}
 Artista buscarArtistaPorNombre(char artistaBuscar[],const char nombreArchivo[])
 {
     Artista noEncontrado;

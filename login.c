@@ -6,61 +6,7 @@
 #include "extras.h"
 #include "artista.h"
 #include "usuario.h"
-
-// ---------- MENU ----------
-int menuLogin(char sesionNickname[]) {
-    int option = 0;
-    do {
-        limpiarConsola();
-        printf("-----------------\n");
-        printf("Inicio de sesion\n");
-        printf("-----------------\n");
-        printf("Con que tipo de usuario desea iniciar sesion?\n");
-        printf("0. Salir\n1. Usuario\n2. Artista\n\nIngrese una opcion: ");
-
-        scanf("%d", &option);
-        while (getchar() != '\n');
-        switch(option) {
-
-        case 1:
-            {
-            char nickname[30];
-            if (inicioSesionUsuario(nickname) == 1) {
-                strcpy(sesionNickname, nickname);
-                menu_usuario(nickname);
-            }
-            if(nickname[0] == '\0')
-            {
-                printf("ERROR en el login");
-                return 0;
-            }
-
-
-            return 1; // los return son para que vuelva al menu anterior
-            }
-        case 2:
-            {
-            int id_log=-1;
-            if (inicioSesionArtista(&id_log, sesionNickname) == 1) {
-                menu_artista(id_log);
-            }
-            if(id_log==-1)
-            {
-                printf("ERROR en el login");
-                return 0;
-            }
-
-            return 1;
-            }
-        default:
-            {
-            return 0;
-            }
-
-        }
-    } while (option);
-}
-
+#include "menus.h"
 
 
 // ---------- LOGIN USUARIO ----------

@@ -2,7 +2,6 @@
 #define LOGIN_H_INCLUDED
 #include "registro.h"
 
-int menuLogin(char sesionNickname[]);
 // -- FUNCIONES USUARIO --
 int verificarUsuarioExiste(char filename[], char nickname[]);
 int verificarContraseniaUsuario(char filename[], char contrasenia[], char nickname[]);
