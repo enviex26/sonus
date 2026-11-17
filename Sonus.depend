@@ -8,30 +8,35 @@
 
 1794660808 /Users/mateoymargui/Documents/GitHub/sonus/registro.h
 
-1793844812 source:/Users/novex/Documents/sonus/main.c
+1794924496 source:/Users/novex/Documents/sonus/main.c
 	<stdio.h>
 	<stdlib.h>
 	"registro.h"
 	"login.h"
+	"extras.h"
 
-1793844812 /Users/novex/Documents/sonus/registro.h
+1794757756 /Users/novex/Documents/sonus/registro.h
 
-1793844831 source:/Users/novex/Documents/sonus/login.c
+1794924692 source:/Users/novex/Documents/sonus/login.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"login.h"
 	"registro.h"
+	"extras.h"
+	"artista.h"
+	"usuario.h"
 
-1793843093 /Users/novex/Documents/sonus/login.h
+1794924363 /Users/novex/Documents/sonus/login.h
 	"registro.h"
 
-1793844823 source:/Users/novex/Documents/sonus/registro.c
+1794920997 source:/Users/novex/Documents/sonus/registro.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<ctype.h>
 	"registro.h"
+	"extras.h"
 
 1794918728 /Users/mateoymargui/Documents/GitHub/sonus/login.h
 	"registro.h"
@@ -131,4 +136,25 @@
 	<stdlib.h>
 	<stdio.h>
 	<time.h>
+
+1794775156 source:/Users/novex/Documents/sonus/extras.c
+	<stdlib.h>
+	<stdio.h>
+	<time.h>
+
+1794773696 /Users/novex/Documents/sonus/extras.h
+
+1794924728 source:/Users/novex/Documents/sonus/usuario.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"login.h"
+	"registro.h"
+	"artista.h"
+	"usuario.h"
+	"extras.h"
+
+1794920997 /Users/novex/Documents/sonus/artista.h
+
+1794920997 /Users/novex/Documents/sonus/usuario.h
 
