@@ -46,10 +46,18 @@
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="menus.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="menus.h" />
 		<Unit filename="registro.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="registro.h" />
+		<Unit filename="reportes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="reportes.h" />
 		<Unit filename="usuario.c">
 			<Option compilerVar="CC" />
 		</Unit>
