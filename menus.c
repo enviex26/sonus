@@ -284,7 +284,6 @@ void menu_usuario(char nickNameUsuario[])
 
         }
     }
-}
 
 void menu_artista(int id_Artista_ing)
 {
@@ -484,14 +483,9 @@ void menu_reportes()
         printf("3. Artista Mas Calificado\n");
         printf("4. Usuario Mas Activo\n");
         printf("0. Salir\n");
-        printf("\nIngrese una opcion: ");
-
-        if(scanf("%d", &opcion) != 1)
-        {
-            while(getchar() != '\n');
-            opcion = -1;
-        }
-
+        printf("-----------------------------\n");
+        printf("Ingrese opcion: ");
+        scanf("%d", &opcion);
         switch(opcion)
         {
             case 1:
@@ -589,12 +583,6 @@ void menu_reportes()
             }
         }
 
-        if(opcion != 0)
-        {
-            printf("\nPresione ENTER para continuar...");
-            while(getchar() != '\n');
-            getchar();
-        }
 
     } while(opcion != 0);
 }
