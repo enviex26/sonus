@@ -5,17 +5,23 @@
 #include "registro.h"
 #include "artista.h"
 #include "usuario.h"
+#include "extras.h"
 
 void menu_usuario(char nickNameUsuario[])
 {
     int opcion;
+    limpiarConsola();
+    printf("-----------------\n");
+    printf("Menu Principal (Usuario)\n");
+    printf("-----------------\n");
     printf("Ingrese Opcion: \n");
+    printf("0.Salir\n");
     printf("1.Ver Catalogo por Artista \n");
     printf("2.Ver Canciones por Album: \n");
     printf("3.Ver Informacion Detallada de Canción\n");
     printf("4.Calificar Canción\n");
     printf("5.Ver Mis Calificaciones\n");
-    printf("0.Para Finalizar\n");
+
     scanf("%d",&opcion);
     while(opcion!=0)
     {
