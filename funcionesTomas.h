@@ -1,4 +1,26 @@
-
+int artistaConMasCalificaciones(char archivoArtistas[],char archivoCanciones[],char archivoCalificaciones[],Artista *topCalificado)//puntero indica al artista ccon mas calificaciones
+{
+    FILE *buffer=fopen(archivoArtistas,"rb");
+    if(buffer==NULL)
+    {
+        return 0;
+    }
+    Artista artista,mejor;
+    fread(&mejor,sizeof(Artista),1,buffer);
+    int calificaciones,masCalificaciones=cantidadCalificacionesArtista(archivoCanciones,archivoCalificaciones,mejor.nombre);
+    while(fread(&artista,sizeof(Artista),1,buffer))
+    {
+        calificaciones=cantidadCalificacionesArtista(archivoCanciones,archivoCalificaciones,artista.nombre);
+        if(calificaciones>masCalificaciones)
+        {
+            mejor=artista;
+            masCalificaciones=calificaciones;
+        }
+    }
+    *topCalificado=mejor;
+    fclose(buffer);
+    return 1;
+}
 
 int usurioConMasCalificaciones(char archivoUsuarios[],char archivoCalificaciones[],Usuario *masCalificaciones)//el puntero es donde va el usuario con mas calificaciones
 {
