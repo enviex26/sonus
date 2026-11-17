@@ -61,10 +61,12 @@ int menuSesionIniciada(char sesionNickname[]) {
 
         case 1:
             limpiarConsola();
-            if (tipoSesion == 1) {
+            if (tipoSesion == 1) { // Usuario
                 menu_usuario(sesionNickname);
-            } else if (tipoSesion == 2) {
+            } else if (tipoSesion == 2) { // Artista
                 menu_artista(sesionIdArtista);
+            } else if (tipoSesion == 3) { // Admin
+                menu_admin(sesionNickname);
             }
             return 1;
 
@@ -100,8 +102,15 @@ int menuLogin(char sesionNickname[]) {
             char nickname[30];
             if (inicioSesionUsuario(nickname) == 1) {
                 strcpy(sesionNickname, nickname);
-                tipoSesion = 1;
-                menu_usuario(nickname);
+
+                if (strcmp(nickname, "admin") == 0) {
+                    tipoSesion = 3;
+                    menu_admin(nickname);
+                } else {
+                    tipoSesion = 1;
+                    menu_usuario(nickname);
+                }
+
             }
             if(nickname[0] == '\0')
             {
@@ -207,7 +216,7 @@ void menu_registro() {
                 printf("Artista registrado, bienvenido a Sonus.\n");
                 esperarLimpieza(2);
             }
-            mostrar_artistas();
+            mostrarArtistas();
             break;
             }
         default:
@@ -217,24 +226,25 @@ void menu_registro() {
 
 void menu_usuario(char nickNameUsuario[])
 {
-    int opcion;
-    limpiarConsola();
-    printf("-----------------\n");
-    printf("Menu Principal (Usuario)\n");
-    printf("-----------------\n");
-    printf("1. Ver Catalogo por Artista \n");
-    printf("2. Ver Canciones por Album: \n");
-    printf("3. Ver Informacion Detallada de Canci—n\n");
-    printf("4. Calificar Canci—n\n");
-    printf("5. Ver Mis Calificaciones\n");
-    printf("0. Salir\n");
-    printf("\nIngrese una opcion: \n");
-
-    scanf("%d",&opcion);
-    while(opcion!=0)
+    int opcion = -1;
+    while (opcion != 0)
     {
+        limpiarConsola();
+        printf("-----------------\n");
+        printf("Menu Principal (Usuario)\n");
+        printf("-----------------\n");
+        printf("1. Ver Catalogo por Artista \n");
+        printf("2. Ver Canciones por Album: \n");
+        printf("3. Ver Informacion Detallada de Canci—n\n");
+        printf("4. Calificar Cancion\n");
+        printf("5. Ver Mis Calificaciones\n");
+        printf("0. Salir\n");
+        printf("\nIngrese una opcion: ");
+        scanf("%d",&opcion);
         switch(opcion)
         {
+            case 0:
+                break;
             case 1:
                 {
                     verCatalogoporArtista("Artistas.dat", "Albumes.dat", "Canciones.dat");
@@ -263,8 +273,9 @@ void menu_usuario(char nickNameUsuario[])
             default:
                 {
                     printf("Opcion Incorrecta\n");
-
+                    break;
                 }
+<<<<<<< HEAD
 
         }
             printf("Ingrese Opcion: \n");
@@ -275,6 +286,9 @@ void menu_usuario(char nickNameUsuario[])
             printf("5.Ver Mis Calificaciones\n");
             printf("0.Para Finalizar\n");
             scanf("%d",&opcion);
+=======
+        }
+>>>>>>> cdd742114d961b998e1b73384c80671b136954c5
     }
 }
 
@@ -389,3 +403,75 @@ void menu_artista(int id_Artista_ing)
     }
 }
 
+void menu_admin(char sesionNickname[])
+{
+    int opcion=-1;
+    int seguir = -1;
+    int idArtista = -1;
+    int idUsuario = -1;
+    while(opcion!=0)
+    {
+        limpiarConsola();
+        printf("-----------------\n");
+        printf("Menu Principal (Admin)\n");
+        printf("-----------------\n");
+        printf("1. Mostrar todos los usuarios\n");
+        printf("2. Mostrar todos los Artistas\n");
+        printf("3. Borrar un artista\n");
+        printf("4. Borrar un usuario\n");
+        printf("5. Reactivar un artista\n");
+        printf("6. Reactivar un usuario\n");
+        printf("0. Salir \n");
+        printf("\nIngrese una opcion: ");
+
+
+        scanf("%d",&opcion);
+
+        switch(opcion) {
+        case 0:
+            return;
+        case 1:
+            limpiarConsola();
+            do {
+            mostrarUsuarios();
+            printf("\nIngrese '0' para salir: ");
+            scanf("%d", &seguir);
+            } while (seguir != 0);
+            break;
+        case 2:
+            limpiarConsola();
+            do {
+            mostrarArtistas();
+            printf("\nIngrese '0' para salir: ");
+            scanf("%d", &seguir);
+            } while (seguir != 0);
+            break;
+        case 3:
+            limpiarConsola();
+            printf("Ingrese la ID del artista a borrar: ");
+            scanf("%d", &idArtista);
+            bajaArtista(idArtista);
+            esperarLimpieza(2);
+            break;
+        case 4:
+            limpiarConsola();
+            printf("Ingrese la ID del usuario a borrar: ");
+            scanf("%d", &idUsuario);
+            bajaUsuario(idUsuario);
+            esperarLimpieza(2);
+            break;
+        case 5:
+            limpiarConsola();
+            printf("Ingrese la ID del artista a reactivar: ");
+            scanf("%d", &idArtista);
+            reactivarArtista(idArtista);
+            esperarLimpieza(2);
+        case 6:
+            limpiarConsola();
+            printf("Ingrese la ID del usuario a reactivar: ");
+            scanf("%d", &idUsuario);
+            reactivarUsuario(idUsuario);
+            esperarLimpieza(2);
+        }
+    }
+}
