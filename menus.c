@@ -237,12 +237,12 @@ void menu_usuario(char nickNameUsuario[])
         {
             case 1:
                 {
-                    verCatalogoporArtista("Artistas.dat", "Album.dat", "Canciones.dat");
+                    verCatalogoporArtista("Artistas.dat", "Albumes.dat", "Canciones.dat");
                     break;
                 }
             case 2:
                 {
-                    verCancionesPorAlbum("Album.dat", "Canciones.dat");
+                    verCancionesPorAlbum("Albumes.dat", "Canciones.dat");
                     break;
                 }
             case 3:
@@ -265,6 +265,8 @@ void menu_usuario(char nickNameUsuario[])
                     printf("Opcion Incorrecta\n");
 
                 }
+
+        }
             printf("Ingrese Opcion: \n");
             printf("1.Ver Catalogo por Artista \n");
             printf("2.Ver Canciones por Album: \n");
@@ -273,7 +275,6 @@ void menu_usuario(char nickNameUsuario[])
             printf("5.Ver Mis Calificaciones\n");
             printf("0.Para Finalizar\n");
             scanf("%d",&opcion);
-        }
     }
 }
 

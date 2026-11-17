@@ -155,7 +155,7 @@ void modificar_album(int id_logeado)
 }
 void mostrar_albumes_logeado(int id_logeado)
 {
-    FILE*archivo=fopen("Albume.dat","rb");
+    FILE*archivo=fopen("Albumes.dat","rb");
 
     if(!archivo)
         return;

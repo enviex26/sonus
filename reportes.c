@@ -39,7 +39,7 @@ void menu_reportes()
             case 1:
             {
                 int validos = 0;
-                Cancion *canciones = arregloTop("canciones.dat", &validos);
+                Cancion *canciones = arregloTop("Canciones.dat", &validos);
 
                 if(canciones == NULL)
                 {
@@ -61,7 +61,7 @@ void menu_reportes()
             case 2:
             {
                 int validos = 0;
-                Album *albumes = ordenadosPorAnio("albumes.dat", &validos);
+                Album *albumes = ordenadosPorAnio("Albumes.dat", &validos);
 
                 if(albumes == NULL)
                 {
@@ -84,7 +84,7 @@ void menu_reportes()
             {
                 Artista mejor;
 
-                int exito = artistaConMasCalificaciones("artistas.dat","canciones.dat","calificaciones.dat",&mejor);
+                int exito = artistaConMasCalificaciones("Artistas.dat","Canciones.dat","Calificaciones.dat",&mejor);
 
                 if(exito == 1)
                 {
@@ -103,7 +103,7 @@ void menu_reportes()
             {
                 Usuario mejor;
 
-                int exito = usurioConMasCalificaciones("usuarios.dat","calificaciones.dat",&mejor);
+                int exito = usurioConMasCalificaciones("usuarios.bin","Calificaciones.dat",&mejor);
 
                 if(exito == 1)
                 {
