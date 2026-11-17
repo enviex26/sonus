@@ -3,7 +3,6 @@
 #include "registro.h"
 #include "login.h"
 #include "extras.h"
-
 int main(void){
     int option;
 // EN LOS CASES, AGREGAR OTRO MENU PARA LAS FUNCIONALIDADES

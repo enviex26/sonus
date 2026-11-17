@@ -5,6 +5,7 @@
 #include "registro.h"
 #include "extras.h"
 #include "artista.h"
+#include "usuario.h"
 
 // ---------- MENU ----------
 int menuLogin() {
@@ -21,7 +22,15 @@ int menuLogin() {
         switch(option) {
 
         case 1:
-            inicioSesionUsuario();
+
+            char nickName[30];
+            inicioSesionUsuario(&nickName);
+            if(nickName[0] == '\0')
+            {
+                printf("ERROR en el login");
+                return 0;
+            }
+            menu_usuario(nickName);
             return 1; // los return son para que vuelva al menu anterior
 
         case 2:
@@ -30,6 +39,7 @@ int menuLogin() {
             if(id_log==-1)
             {
                 printf("ERROR en el login");
+                return 0;
             }
             menu_artista(id_log);
             return 1;
@@ -86,8 +96,7 @@ int verificarContraseniaUsuario(char filename[], char contrasenia[], char nickna
 }
 
 
-void inicioSesionUsuario() {
-    char nickname[30];
+void inicioSesionUsuario(char *nickname[30]) {
     char contrasenia[20];
     FILE *buffer = fopen("usuarios.bin", "rb");
     limpiarConsola();
@@ -103,12 +112,12 @@ void inicioSesionUsuario() {
     do {
         printf("Ingrese su nickname (Usuario): ");
         scanf("%s", nickname);
-    } while(verificarUsuarioExiste("usuarios.bin", nickname) == 0);
+    } while(verificarUsuarioExiste("usuarios.bin", *nickname) == 0);
 
     do {
         printf("Ingrese la contrasenia: ");
         scanf("%s", contrasenia);
-    } while(verificarContraseniaUsuario("usuarios.bin", contrasenia, nickname) == 0);
+    } while(verificarContraseniaUsuario("usuarios.bin", contrasenia, *nickname) == 0);
 
     fclose(buffer);
 }
