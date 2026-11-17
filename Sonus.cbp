@@ -50,6 +50,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="registro.h" />
+		<Unit filename="reportes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="reportes.h" />
 		<Unit filename="usuario.c">
 			<Option compilerVar="CC" />
 		</Unit>

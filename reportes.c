@@ -1,61 +1,159 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "login.h"
+#include "registro.h"
+#include "artista.h"
+#include "usuario.h"
+#include "extras.h"
+#include "menus.h"
+#include "reportes.h"
+
 void menu_reportes()
 {
-    int opcion;
-    limpiarConsola();
-    printf("-----------------\n");
-    printf("Menu Principal (Reportes)\n");
-    printf("-----------------\n");
-    printf("Ingrese Opcion: \n");
-    printf("0.Salir\n");
-    printf("1.Ver Catalogo por Artista \n");
-    printf("2.Ver Canciones por Album: \n");
-    printf("3.Ver Informacion Detallada de Canci—n\n");
-    printf("4.Calificar Canci—n\n");
-    printf("5.Ver Mis Calificaciones\n");
+    int opcion = -1;
 
-
-    scanf("%d",&opcion);
-    while(opcion!=0)
+    do
     {
+        limpiarConsola();
+
+        printf("\n-----------------------------\n");
+        printf("       MENU DE REPORTES       \n");
+        printf("-----------------------------\n");
+        printf("1. Top 10 Canciones\n");
+        printf("2. Albumes Recientes\n");
+        printf("3. Artista Mas Calificado\n");
+        printf("4. Usuario Mas Activo\n");
+        printf("0. Salir\n");
+        printf("-----------------------------\n");
+        printf("Ingrese opcion: ");
+
+        if(scanf("%d", &opcion) != 1)
+        {
+            while(getchar() != '\n');
+            opcion = -1;
+        }
+
         switch(opcion)
         {
             case 1:
+            {
+                int validos = 0;
+                Cancion *canciones = arregloTop("canciones.dat", &validos);
+
+                if(canciones == NULL)
                 {
-                    canciones=Cancion *arregloTop(char nombreArchivo[],int *validos);
+                    printf("Error al cargar las canciones.\n");
                     break;
                 }
+
+                printf("\n--- TOP 10 CANCIONES ---\n");
+
+                for(int i = 0; i < validos; i++)
+                {
+                    printf("%d. %s - Promedio: %.2f\n",
+                           i + 1,
+                           canciones[i].titulo,
+                           canciones[i].calificacionPromedio);
+                }
+
+                free(canciones);
+                break;
+            }
+
             case 2:
+            {
+                int validos = 0;
+                Album *albumes = ordenadosPorAnio("albumes.dat", &validos);
+
+                if(albumes == NULL)
                 {
-                    Album *ordenadosPorAnio(char nombreArchivo[],int *validos);
+                    printf("Error al cargar los albumes.\n");
                     break;
                 }
+
+                printf("\n--- ALBUMES ORDENADOS POR ANIO ---\n");
+
+                for(int i = 0; i < validos; i++)
+                {
+                    printf("Anio de lanzamiento: %d\n",
+                           albumes[i].anioLanzamiento);
+                }
+
+                free(albumes);
+                break;
+            }
+
             case 3:
-                {
-                    int artistaConMasCalificaciones(char archivoArtistas[],char archivoCanciones[],
-                                                    char archivoCalificaciones[],Artista *topCalificado);
+            {
+                Artista mejor;
 
-                    break;
+                int exito = artistaConMasCalificaciones(
+                    "artistas.dat",
+                    "canciones.dat",
+                    "calificaciones.dat",
+                    &mejor
+                );
+
+                if(exito == 1)
+                {
+                    printf("\n--- ARTISTA MAS CALIFICADO ---\n");
+                    printf("Artista: %s\n", mejor.nombre);
                 }
+                else
+                {
+                    printf("No se pudo obtener el artista.\n");
+                }
+
+                break;
+            }
+
             case 4:
-                {
-                    int cantidadCalificacionesArtista(char archivoCanciones[],char archivoCalficaciones[]
-                                                      ,char nombreArtista[]);
+            {
+                Usuario mejor;
 
-                    break;
-                }
-            case 5:
+                int exito = usurioConMasCalificaciones(
+                    "usuarios.dat",
+                    "calificaciones.dat",
+                    &mejor
+                );
+
+                if(exito == 1)
                 {
-                    int cantidadCalificacionesCancion(char archivoCalificaciones[],char idCancionBuscar[]);
-                    break;
+                    printf("\n--- USUARIO MAS ACTIVO ---\n");
+                    printf("Usuario: %s\n", mejor.nickname);
                 }
+                else
+                {
+                    printf("No se pudo obtener el usuario.\n");
+                }
+
+                break;
+            }
+
+            case 0:
+            {
+                printf("Saliendo del menu de reportes...\n");
+                break;
+            }
+
             default:
-                {
-                    printf("Opcion Incorrecta\n");
-
-                }
+            {
+                printf("Opcion incorrecta.\n");
+                break;
+            }
         }
-    }
+
+        if(opcion != 0)
+        {
+            printf("\nPresione ENTER para continuar...");
+            while(getchar() != '\n');
+            getchar();
+        }
+
+    } while(opcion != 0);
 }
+
 Album *ordenadosPorAnio(char nombreArchivo[],int *validos)//el arreglo tiene todos los albumes ingresados ordenados por anio
 {
     FILE *buffer=fopen(nombreArchivo,"rb");
@@ -90,8 +188,6 @@ Album *ordenadosPorAnio(char nombreArchivo[],int *validos)//el arreglo tiene tod
         arreglo[*validos]=album;
         (*validos)++;
     }
-    free(canciones);
-    canciones=NULL;
     fclose(buffer);
     return arreglo;
 }
@@ -206,7 +302,7 @@ int usurioConMasCalificaciones(char archivoUsuarios[],char archivoCalificaciones
     {
         return 0;
     }
-    Usuario ususrio,mejor;
+    Usuario usuario,mejor;
     int cantidad,cantidadMejor;
     fread(&mejor,sizeof(Usuario),1,buffer);
     cantidadMejor=cantidadCalificacionesUsurio(archivoCalificaciones,mejor.nickname);
