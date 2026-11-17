@@ -36,7 +36,7 @@
 1794869411 /Users/mateoymargui/Documents/GitHub/sonus/login.h
 	"registro.h"
 
-1794869500 source:/Users/mateoymargui/Documents/GitHub/sonus/login.c
+1794882812 source:/Users/mateoymargui/Documents/GitHub/sonus/login.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -108,7 +108,7 @@
 	"artista.h"
 	"usuario.h"
 
-1794868908 /Users/mateoymargui/Documents/GitHub/sonus/artista.h
+1794883441 /Users/mateoymargui/Documents/GitHub/sonus/artista.h
 
 1794872034 /Users/mateoymargui/Documents/GitHub/sonus/usuario.h
 
