@@ -1,3 +1,23 @@
+int cantidadCalificacionesCancion(char archivoCalificaciones[],char idCancionBuscar[])//cantidad calificaciones de una cancion
+{
+    FILE *buffer=fopen(archivoCalificaciones,"rb");
+    if(buffer==NULL)
+    {
+        return 0;
+    }
+    int cantidad=0;
+    Calificacion calificacion;
+    while(fread(&calificacion,sizeof(Calificacion),1,buffer))
+    {
+        if(strcmp(calificacion.idCancion,idCancionBuscar)==0)
+        {
+            cantidad++;
+        }
+    }
+    fclose(buffer);
+    return cantidad;
+}
+
 int cantidadCalificacionesArtista(char archivoCanciones[],char archivoCalficaciones[],char nombreArtista[])//regresa la cantidad de calificaciones de un artista
 {
     FILE *buffer=fopen(archivoCanciones,"rb");
