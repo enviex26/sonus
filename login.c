@@ -20,14 +20,14 @@ int verificarUsuarioExiste(char filename[], char nickname[]) {
 
 
     while (fread(&usr, sizeof(Usuario), 1, buffer) == 1) {
-        if (strcmp(usr.nickname, nickname)==0) {
+        if (strcmp(usr.nickname, nickname)==0 && usr.activo == 1) {
             fclose(buffer);
             return 1;
         }
     }
 
     fclose(buffer);
-    printf("El usuario no existe!\n");
+    printf("El usuario no existe o esta dado de baja!\n");
     return 0;
 }
 
@@ -90,7 +90,7 @@ int verificarArtistaExiste(char filename[], char nickname[]) {
 
 
     while (fread(&art, sizeof(Artista), 1, buffer) == 1) {
-        if (strcmp(art.nickname, nickname)==0) {
+        if (strcmp(art.nickname, nickname)==0 && art.activo == 1) {
             fclose(buffer);
             return 1;
         }

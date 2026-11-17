@@ -7,27 +7,7 @@
 #include "menus.h"
 
 //-------------------REGISTRO ARTISTA-------------------------//
-void mostrar_artista(Artista b)
-{
-    printf("-------------------\n");
-    printf("Nombre: %s \n",b.nombre);
-    printf("Genero: %s \n",b.generoPrincipal);
-    printf("Nickname: %s \n",b.nickname);
-    printf("ID: %i \n",b.IdArtista);
-    printf("--------------------\n");
-}
-void mostrar_artistas()
-{
-    FILE*archivo=fopen("Artistas.dat","rb");
-    if(!archivo)
-        return;
-    Artista aux;
-    while(fread(&aux,sizeof(Artista),1,archivo)==1)
-    {
-        mostrar_artista(aux);
-    }
-    fclose(archivo);
-}
+
 int pasar_artista_a_archivo(Artista b)
 {
     FILE* archivo=fopen("Artistas.dat","ab");
