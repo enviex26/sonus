@@ -233,6 +233,7 @@ void menu_registro() {
 void menu_usuario(char nickNameUsuario[])
 {
     int opcion = -1;
+    int seguir = -1;
     while (opcion != 0)
     {
         limpiarConsola();
@@ -253,17 +254,32 @@ void menu_usuario(char nickNameUsuario[])
                 break;
             case 1:
                 {
-                    verCatalogoporArtista("Artistas.dat", "Albumes.dat", "Canciones.dat");
+                    do {
+                        limpiarConsola();
+                        verCatalogoporArtista("Artistas.dat", "Albumes.dat", "Canciones.dat");
+                        printf("\nIngrese '0' para volver: ");
+                        scanf("%d", &seguir);
+                    } while (seguir != 0);
                     break;
                 }
             case 2:
                 {
-                    verCancionesPorAlbum("Albumes.dat", "Canciones.dat");
+                    do {
+                        limpiarConsola();
+                        verCancionesPorAlbum("Albumes.dat", "Canciones.dat");
+                        printf("\nIngrese '0' para volver: ");
+                        scanf("%d", &seguir);
+                    } while (seguir != 0);
                     break;
                 }
             case 3:
                 {
-                    infoDetalladaCancion("Canciones.dat", "Calificaciones.dat");
+                    do {
+                        limpiarConsola();
+                        infoDetalladaCancion("Canciones.dat", "Calificaciones.dat");
+                        printf("\nIngrese '0' para volver: ");
+                        scanf("%d", &seguir);
+                    } while (seguir != 0);
                     break;
                 }
             case 4:
@@ -273,7 +289,12 @@ void menu_usuario(char nickNameUsuario[])
                 }
             case 5:
                 {
-                    verMisCalificaciones("Calificaciones.dat", nickNameUsuario);
+                    do {
+                        limpiarConsola();
+                        verMisCalificaciones("Calificaciones.dat", nickNameUsuario);
+                        printf("\nIngrese '0' para volver: ");
+                        scanf("%d", &seguir);
+                    } while (seguir != 0);
                     break;
                 }
             default:
