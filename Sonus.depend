@@ -1,10 +1,12 @@
 # depslib dependency file v1.0
-1794917550 source:/Users/mateoymargui/Documents/GitHub/sonus/main.c
+1794935837 source:/Users/mateoymargui/Documents/GitHub/sonus/main.c
 	<stdio.h>
 	<stdlib.h>
 	"registro.h"
 	"login.h"
 	"extras.h"
+	"reportes.h"
+	"menus.h"
 
 1794660808 /Users/mateoymargui/Documents/GitHub/sonus/registro.h
 
@@ -180,4 +182,30 @@
 	"menus.h"
 
 1794933794 /Users/mateoymargui/Documents/GitHub/sonus/menus.h
+
+1794933794 source:/Users/mateoymargui/Documents/GitHub/sonus/menus.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"extras.h"
+	"registro.h"
+	"artista.h"
+	"usuario.h"
+	"login.h"
+	"menus.h"
+
+1794935271 /Users/mateoymargui/Documents/GitHub/sonus/reportes.h
+	"artista.h"
+
+1794936053 source:/Users/mateoymargui/Documents/GitHub/sonus/reportes.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"login.h"
+	"registro.h"
+	"artista.h"
+	"usuario.h"
+	"extras.h"
+	"menus.h"
+	"reportes.h"
 

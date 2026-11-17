@@ -51,10 +51,7 @@ void menu_reportes()
 
                 for(int i = 0; i < validos; i++)
                 {
-                    printf("%d. %s - Promedio: %.2f\n",
-                           i + 1,
-                           canciones[i].titulo,
-                           canciones[i].calificacionPromedio);
+                    printf("%d. %s - Promedio: %.2f\n",i + 1,canciones[i].titulo,canciones[i].calificacionPromedio);
                 }
 
                 free(canciones);
@@ -76,8 +73,7 @@ void menu_reportes()
 
                 for(int i = 0; i < validos; i++)
                 {
-                    printf("Anio de lanzamiento: %d\n",
-                           albumes[i].anioLanzamiento);
+                    printf("Anio de lanzamiento: %d\n", albumes[i].anioLanzamiento);
                 }
 
                 free(albumes);
@@ -88,12 +84,7 @@ void menu_reportes()
             {
                 Artista mejor;
 
-                int exito = artistaConMasCalificaciones(
-                    "artistas.dat",
-                    "canciones.dat",
-                    "calificaciones.dat",
-                    &mejor
-                );
+                int exito = artistaConMasCalificaciones("artistas.dat","canciones.dat","calificaciones.dat",&mejor);
 
                 if(exito == 1)
                 {
@@ -112,11 +103,7 @@ void menu_reportes()
             {
                 Usuario mejor;
 
-                int exito = usurioConMasCalificaciones(
-                    "usuarios.dat",
-                    "calificaciones.dat",
-                    &mejor
-                );
+                int exito = usurioConMasCalificaciones("usuarios.dat","calificaciones.dat",&mejor);
 
                 if(exito == 1)
                 {
@@ -231,7 +218,7 @@ Cancion *arregloTop(char nombreArchivo[],int *validos)//arreglo con un maximos d
     return arreglo;
 }
 
-int cantidadCalificacionesCancion(char archivoCalificaciones[],char idCancionBuscar[])//cantidad calificaciones de una cancion
+int cantidadCalificacionesCancion(char archivoCalificaciones[],int idCancionBuscar)//cantidad calificaciones de una cancion
 {
     FILE *buffer=fopen(archivoCalificaciones,"rb");
     if(buffer==NULL)
@@ -242,7 +229,7 @@ int cantidadCalificacionesCancion(char archivoCalificaciones[],char idCancionBus
     Calificacion calificacion;
     while(fread(&calificacion,sizeof(Calificacion),1,buffer))
     {
-        if(strcmp(calificacion.idCancion,idCancionBuscar)==0)
+        if(calificacion.idCancion==idCancionBuscar)
         {
             cantidad++;
         }
@@ -251,7 +238,7 @@ int cantidadCalificacionesCancion(char archivoCalificaciones[],char idCancionBus
     return cantidad;
 }
 
-int cantidadCalificacionesArtista(char archivoCanciones[],char archivoCalficaciones[],char nombreArtista[])//regresa la cantidad de calificaciones de un artista
+int cantidadCalificacionesArtista(char archivoCanciones[],char archivoCalficaciones[],int IdArtista)//regresa la cantidad de calificaciones de un artista
 {
     FILE *buffer=fopen(archivoCanciones,"rb");
     if(buffer==NULL)
@@ -262,7 +249,7 @@ int cantidadCalificacionesArtista(char archivoCanciones[],char archivoCalficacio
     Cancion cancion;
     while(fread(&cancion,sizeof(Cancion),1,buffer))
     {
-        if(strcmp(cancion.nombreArtista,nombreArtista)==0)
+        if(cancion.idArtista==IdArtista)
         {
             suma=suma+cantidadCalificacionesCancion(archivoCalficaciones,cancion.idCancion);
         }
@@ -271,54 +258,101 @@ int cantidadCalificacionesArtista(char archivoCanciones[],char archivoCalficacio
     return suma;
 }
 
-int artistaConMasCalificaciones(char archivoArtistas[],char archivoCanciones[],char archivoCalificaciones[],Artista *topCalificado)//puntero indica al artista ccon mas calificaciones
+
+int artistaConMasCalificaciones(char archivoArtistas[],char archivoCanciones[],char archivoCalificaciones[],Artista *topCalificado)
 {
-    FILE *buffer=fopen(archivoArtistas,"rb");
-    if(buffer==NULL)
+    FILE *buffer = fopen(archivoArtistas, "rb");
+
+    if(buffer == NULL || topCalificado == NULL)
     {
+        if(buffer != NULL)
+            fclose(buffer);
+
         return 0;
     }
-    Artista artista,mejor;
-    fread(&mejor,sizeof(Artista),1,buffer);
-    int calificaciones,masCalificaciones=cantidadCalificacionesArtista(archivoCanciones,archivoCalificaciones,mejor.nombre);
-    while(fread(&artista,sizeof(Artista),1,buffer))
+
+    Artista artista, mejor;
+
+    if(fread(&mejor, sizeof(Artista), 1, buffer) != 1)
     {
-        calificaciones=cantidadCalificacionesArtista(archivoCanciones,archivoCalificaciones,artista.nombre);
-        if(calificaciones>masCalificaciones)
+        fclose(buffer);
+        return 0;
+    }
+
+    int masCalificaciones = cantidadCalificacionesArtista(
+        archivoCanciones,
+        archivoCalificaciones,
+        mejor.IdArtista
+    );
+
+    while(fread(&artista, sizeof(Artista), 1, buffer) == 1)
+    {
+        int calificaciones = cantidadCalificacionesArtista(
+            archivoCanciones,
+            archivoCalificaciones,
+            artista.IdArtista
+        );
+
+        if(calificaciones > masCalificaciones)
         {
-            mejor=artista;
-            masCalificaciones=calificaciones;
+            mejor = artista;
+            masCalificaciones = calificaciones;
         }
     }
-    *topCalificado=mejor;
+
+    *topCalificado = mejor;
+
     fclose(buffer);
     return 1;
 }
 
-int usurioConMasCalificaciones(char archivoUsuarios[],char archivoCalificaciones[],Usuario *masCalificaciones)//el puntero es donde va el usuario con mas calificaciones
+
+
+int usurioConMasCalificaciones(char archivoUsuarios[],char archivoCalificaciones[],Usuario *masCalificaciones)
 {
-    FILE *buffer=fopen(archivoUsuarios,"rb");
-    if(buffer==NULL)
+    FILE *buffer = fopen(archivoUsuarios, "rb");
+
+    if(buffer == NULL || masCalificaciones == NULL)
     {
+        if(buffer != NULL)
+            fclose(buffer);
+
         return 0;
     }
-    Usuario usuario,mejor;
-    int cantidad,cantidadMejor;
-    fread(&mejor,sizeof(Usuario),1,buffer);
-    cantidadMejor=cantidadCalificacionesUsurio(archivoCalificaciones,mejor.nickname);
-    while(fread(&ususrio,sizeof(Usuario),1,buffer))
+
+    Usuario usuario, mejor;
+
+    if(fread(&mejor, sizeof(Usuario), 1, buffer) != 1)
     {
-        cantidad=cantidadCalificacionesUsurio(archivoCalificaciones,ususrio.nickname);
-        if(cantidad>cantidadMejor)
+        fclose(buffer);
+        return 0;
+    }
+
+    int cantidadMejor = cantidadCalificacionesUsurio(
+        archivoCalificaciones,
+        mejor.nickname
+    );
+
+    while(fread(&usuario, sizeof(Usuario), 1, buffer) == 1)
+    {
+        int cantidad = cantidadCalificacionesUsurio(
+            archivoCalificaciones,
+            usuario.nickname
+        );
+
+        if(cantidad > cantidadMejor)
         {
-            cantidadMejor=cantidad;
-            mejor=ususrio;
+            cantidadMejor = cantidad;
+            mejor = usuario;
         }
     }
-    *masCalificaciones=mejor;
+
+    *masCalificaciones = mejor;
+
     fclose(buffer);
-    return 1;//necesitaba el int 1 para saber si se pudo ingresar al archivo
+    return 1;
 }
+
 
 int cantidadCalificacionesUsurio(char archivoCalificaciones[],char nicknameBuscar[])//regresa la cantidad de calificaciones que hizo un usuario
 {

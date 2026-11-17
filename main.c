@@ -4,6 +4,7 @@
 #include "login.h"
 #include "extras.h"
 #include "reportes.h"
+#include "menus.h"
 int main(void){
     int option = 0;
     char sesionNickname[30] = "";
@@ -19,7 +20,7 @@ int main(void){
             printf("Bienvenido a Sonus!\n");
         printf("------------\n");
         printf("Que desea hacer?\n");
-        printf("0. Salir\n1. Iniciar Sesion\n2. Registro\n\nIngrese una opcion: ");
+        printf("0. Salir\n1. Iniciar Sesion\n2. Registro\n3.Reportes\nIngrese una opcion: ");
         scanf("%d", &option);
 
 
@@ -40,7 +41,7 @@ int main(void){
         case 3:
             {
                 limpiarConsola();
-                menu
+                menu_reportes();
             }
 
         default:
