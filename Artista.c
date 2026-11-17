@@ -8,13 +8,12 @@
 
 void menu_artista(int id_Artista_ing)
 {
-    int opcion;
-
+    int opcion=-1;
     while(opcion!=0)
     {
         printf("Ingrese una opcion: \n");
-        printf("1.Canciones. \n");
-        printf("2.Albumes. \n");
+        printf("1.Albumes. \n");
+        printf("2.Canciones. \n");
         printf("0.Para Finalizar. \n");
         scanf("%d",&opcion);
         switch(opcion)
@@ -225,7 +224,6 @@ void mostrar_canciones_logeado(int id_logeado)
 //-------FUNCIONES CREAR CANCION------------//
 int agregar_cancion(Cancion* c, int id_Artista_ing)
 {
-    int repetido=0;
     if(generar_ID_cancion()==-1)
     {
         printf("ERROR en el ID.\n");

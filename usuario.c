@@ -99,8 +99,8 @@ void mostrarCancion(Cancion can)
 {
     printf("ID Cancion: %d\n", can.idCancion);
     printf("Titulo: %s\n", can.titulo);
-    printf("Album: %s\n", can.idAlbum);
-    printf("Artista: %s\n", can.idArtista);
+    printf("Album: %i\n", can.idAlbum);
+    printf("Artista: %i\n", can.idArtista);
     printf("Duracion: %d segundos\n", can.duracionSegundos);
     printf("Calificacion Promedio: %.2f / 5.0\n", can.calificacionPromedio);
     printf("\n");
@@ -190,7 +190,7 @@ Album buscarAlbumTitulo(char albumBuscar[],char nombreArchivo[])
     fclose(archivo);
     return noEncontrado;
 }
-void verCancionesPorAlbum(const char nombreArchivoAlbum[],const char nombreArchivoCancion[])//void no necesita un return
+void verCancionesPorAlbum(const char nombreArchivoAlbum[],const char nombreArchivoCancion[])
 {
     char albumBuscar[100];
     printf("Ingrese Album: ");

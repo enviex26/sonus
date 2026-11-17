@@ -101,7 +101,7 @@ void mostrar_artista(Artista b)
 }
 void mostrar_artistas()
 {
-    FILE*archivo=fopen("artistas.bin","rb");
+    FILE*archivo=fopen("Artistas.dat","rb");
     if(!archivo)
         return;
     Artista aux;
@@ -113,7 +113,7 @@ void mostrar_artistas()
 }
 int pasar_artista_a_archivo(Artista b)
 {
-    FILE* archivo=fopen("artistas.bin","ab");
+    FILE* archivo=fopen("Artistas.dat","ab");
      if(archivo != NULL)
     {
         fwrite(&b, sizeof(Artista), 1, archivo);
@@ -173,7 +173,7 @@ int cargar_artista(Artista *b)
 int corroborar_string_Art(char string_ingresado[])
 {
     int repetido=0;
-    FILE*archivo=fopen("artistas.bin","rb");
+    FILE*archivo=fopen("Artistas.dat","rb");
     if(!archivo)
         return -1;
     Artista aux;
@@ -205,10 +205,10 @@ int generar_ID_artista()
     int nuevoID=0;
 
     int verificacion=0;
-    FILE*archivo=fopen("artistas.bin","rb");
+    FILE*archivo=fopen("Artistas.dat","rb");
     if(!archivo)
     {
-        verificacion=crear_archivo("artistas.bin");
+        verificacion=crear_archivo("Artistas.dat");
         if(verificacion==-1)
         {
          printf("Error en la creacion del archivo.\n");
@@ -219,7 +219,7 @@ int generar_ID_artista()
     if(verificacion==1)
     {
         printf("Archivo creado con exito!\n");
-        archivo=fopen("artistas.bin","rb");
+        archivo=fopen("Artistas.dat","rb");
         if(!archivo){
             printf("ERROR en la lectura del archivo.\n");
             return -1;
@@ -267,7 +267,7 @@ int generar_ID_artista()
 int corroborar_ID_artista(int ID_ingresado)
 {
     int repetido=0;
-    FILE*archivo=fopen("artistas.bin","rb");
+    FILE*archivo=fopen("Artistas.dat","rb");
     if(!archivo)
     {
         printf("Error de apertura de archivo en el ID");
