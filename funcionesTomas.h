@@ -1,3 +1,23 @@
+int cantidadCalificacionesArtista(char archivoCanciones[],char archivoCalficaciones[],char nombreArtista[])//regresa la cantidad de calificaciones de un artista
+{
+    FILE *buffer=fopen(archivoCanciones,"rb");
+    if(buffer==NULL)
+    {
+        return 0;
+    }
+    int suma=0;
+    Cancion cancion;
+    while(fread(&cancion,sizeof(Cancion),1,buffer))
+    {
+        if(strcmp(cancion.nombreArtista,nombreArtista)==0)
+        {
+            suma=suma+cantidadCalificacionesCancion(archivoCalficaciones,cancion.idCancion);
+        }
+    }
+    fclose(buffer);
+    return suma;
+}
+
 int artistaConMasCalificaciones(char archivoArtistas[],char archivoCanciones[],char archivoCalificaciones[],Artista *topCalificado)//puntero indica al artista ccon mas calificaciones
 {
     FILE *buffer=fopen(archivoArtistas,"rb");
