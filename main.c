@@ -20,7 +20,7 @@ int main(void){
             printf("Bienvenido a Sonus!\n");
         printf("------------\n");
         printf("Que desea hacer?\n");
-        printf("0. Salir\n1. Iniciar Sesion\n2. Registro\n3.Reportes\nIngrese una opcion: ");
+        printf("0. Salir\n1. Iniciar Sesion\n2. Registro\n3. Reportes\nIngrese una opcion: ");
         scanf("%d", &option);
 
 

@@ -181,7 +181,7 @@ void buscarCancionPorTitulo(Cancion *encontrada,char nombreArchivoCancion[])
 {
     char tituloBuscar[100];
     printf("Ingrese Cancion\n");
-    fgets(tituloBuscar,100,stdin);
+    scanf(" %99[^\n]",tituloBuscar);
     tituloBuscar[strcspn(tituloBuscar,"\n")]='\0';
 
     FILE *archivo=fopen(nombreArchivoCancion,"rb");
