@@ -6,6 +6,7 @@ typedef struct stArtista {
     char contrasenia[20]; // Para el login
     char generoPrincipal[30];
     char nickname[30];
+    int activo;
 } Artista;
 
 typedef struct stUsuario {
@@ -13,6 +14,7 @@ typedef struct stUsuario {
     char email[50];
     char contrasenia[20]; // Para el login
     char nickname[30];
+    int activo;
 } Usuario;
 //--------------PROTOTIPADOS----------------//
 //--------------ARTISTAS----------------//
@@ -21,7 +23,6 @@ int generar_ID_artista();
 int corroborar_string_Art(char string_ingresado[]);
 int cargar_artista(Artista *b);
 int pasar_artista_a_archivo(Artista b);
-void mostrar_artistas();
 
 //--------------USUARIOS----------------//
 int corroborar_contrasenia(char c[], int dim);

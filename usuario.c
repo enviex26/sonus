@@ -66,9 +66,27 @@ void buscarCancionPorAlbum(FILE *archivoCancion,Cancion *encontrada,int idAlbum)
         }
     }
 }
-void verCatalogoporArtista(const char nombreArchivoArtistas[],const char nombreArchivoAlbum[],const char nombreArchivoCancion[])
+int verCatalogoporArtista(const char nombreArchivoArtistas[],const char nombreArchivoAlbum[],const char nombreArchivoCancion[])
 {
     char artistaBuscar[50];
+    FILE *archivoAlbum=fopen(nombreArchivoAlbum,"rb");
+    FILE *archivoCancion=fopen(nombreArchivoCancion,"rb");
+
+    if (!archivoAlbum) {
+        limpiarConsola();
+        printf("No se pudo abrir el archivo.\n");
+        fflush(stdout);
+        esperarLimpieza(2);
+        return 0;
+    }
+    if (!archivoCancion) {
+        limpiarConsola();
+        printf("No se pudo abrir el archivo.\n");
+        fflush(stdout);
+        esperarLimpieza(2);
+        return 0;
+    }
+
     printf("Ingrese artista: ");
     scanf(" %49[^\n]",artistaBuscar);
     artistaBuscar[strcspn(artistaBuscar, "\n")] = '\0';
@@ -78,22 +96,7 @@ void verCatalogoporArtista(const char nombreArchivoArtistas[],const char nombreA
     if(encontrado.IdArtista==-1)
     {
         printf("Artista No Encontrado\n");
-        return;
-    }
-
-    FILE *archivoAlbum=fopen(nombreArchivoAlbum,"rb");
-    if(archivoAlbum==NULL)
-    {
-        printf("Error al abrir archivo\n");
-        return;
-    }
-
-    FILE *archivoCancion=fopen(nombreArchivoCancion,"rb");
-    if(archivoCancion==NULL)
-    {
-        fclose(archivoAlbum);
-        printf("Error al abrir archivo\n");
-        return;
+        return 0;
     }
 
     Album leerAlbum;
@@ -114,6 +117,7 @@ void verCatalogoporArtista(const char nombreArchivoArtistas[],const char nombreA
     }
     fclose(archivoCancion);
     fclose(archivoAlbum);
+    return 0;
 }
 Album buscarAlbumTitulo(char albumBuscar[],char nombreArchivo[])
 {

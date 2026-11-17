@@ -7,5 +7,6 @@ int menuSesionIniciada(char sesionNickname[]);
 void menu_usuario(char nickNameUsuario[]);
 void menu_artista(int id_Artista_ing);
 void menu_registro();
+void menu_admin(char sesionNickname[]);
 
 #endif // MENUS_H_INCLUDED
