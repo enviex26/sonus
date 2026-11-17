@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1794828204 source:/Users/mateoymargui/Documents/GitHub/sonus/main.c
+1794917550 source:/Users/mateoymargui/Documents/GitHub/sonus/main.c
 	<stdio.h>
 	<stdlib.h>
 	"registro.h"
@@ -8,35 +8,16 @@
 
 1794660808 /Users/mateoymargui/Documents/GitHub/sonus/registro.h
 
-1793844812 source:/Users/novex/Documents/sonus/main.c
+1794924496 source:/Users/novex/Documents/sonus/main.c
 	<stdio.h>
 	<stdlib.h>
 	"registro.h"
 	"login.h"
+	"extras.h"
 
-1793844812 /Users/novex/Documents/sonus/registro.h
+1794757756 /Users/novex/Documents/sonus/registro.h
 
-1793844831 source:/Users/novex/Documents/sonus/login.c
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	"login.h"
-	"registro.h"
-
-1793843093 /Users/novex/Documents/sonus/login.h
-	"registro.h"
-
-1793844823 source:/Users/novex/Documents/sonus/registro.c
-	<stdio.h>
-	<stdlib.h>
-	<string.h>
-	<ctype.h>
-	"registro.h"
-
-1794869411 /Users/mateoymargui/Documents/GitHub/sonus/login.h
-	"registro.h"
-
-1794882812 source:/Users/mateoymargui/Documents/GitHub/sonus/login.c
+1794924692 source:/Users/novex/Documents/sonus/login.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -44,6 +25,31 @@
 	"registro.h"
 	"extras.h"
 	"artista.h"
+	"usuario.h"
+
+1794924363 /Users/novex/Documents/sonus/login.h
+	"registro.h"
+
+1794920997 source:/Users/novex/Documents/sonus/registro.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"registro.h"
+	"extras.h"
+
+1794918728 /Users/mateoymargui/Documents/GitHub/sonus/login.h
+	"registro.h"
+
+1794919099 source:/Users/mateoymargui/Documents/GitHub/sonus/login.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"login.h"
+	"registro.h"
+	"extras.h"
+	"artista.h"
+	"usuario.h"
 
 1794884410 source:d:\gonza\documentos\github\sonus\main.c
 	<stdio.h>
@@ -91,7 +97,7 @@
 
 1794828204 /Users/mateoymargui/Documents/GitHub/sonus/extras.h
 
-1794873698 source:/Users/mateoymargui/Documents/GitHub/sonus/registro.c
+1794918628 source:/Users/mateoymargui/Documents/GitHub/sonus/registro.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -108,9 +114,9 @@
 	"artista.h"
 	"usuario.h"
 
-1794883441 /Users/mateoymargui/Documents/GitHub/sonus/artista.h
+1794920086 /Users/mateoymargui/Documents/GitHub/sonus/artista.h
 
-1794872034 /Users/mateoymargui/Documents/GitHub/sonus/usuario.h
+1794918728 /Users/mateoymargui/Documents/GitHub/sonus/usuario.h
 
 1794883744 source:d:\gonza\documentos\github\sonus\artista.c
 	<stdio.h>
@@ -130,4 +136,25 @@
 	<stdlib.h>
 	<stdio.h>
 	<time.h>
+
+1794775156 source:/Users/novex/Documents/sonus/extras.c
+	<stdlib.h>
+	<stdio.h>
+	<time.h>
+
+1794773696 /Users/novex/Documents/sonus/extras.h
+
+1794924728 source:/Users/novex/Documents/sonus/usuario.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"login.h"
+	"registro.h"
+	"artista.h"
+	"usuario.h"
+	"extras.h"
+
+1794920997 /Users/novex/Documents/sonus/artista.h
+
+1794920997 /Users/novex/Documents/sonus/usuario.h
 

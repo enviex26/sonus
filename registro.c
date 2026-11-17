@@ -15,9 +15,8 @@ void menu_registro()
     printf("0. Salir\n");
     printf("1. Usuario\n");
     printf("2. Artista\n");
-    printf("\nIngrese una opcion: ");
+    printf("Ingrese una opcion: ");
     scanf("%d", &option);
-    while (getchar() != '\n');
 
         switch (option)
         {
@@ -296,8 +295,8 @@ Usuario* redimensionar_arr(Usuario usuarios[],int* capacidad)
     if(temp)
     {
      usuarios=temp;
-     (*capacidad)++;
-     return temp;
+     (*capacidad)=nueva_capacidad;
+     return usuarios;
     }
     else
     {
