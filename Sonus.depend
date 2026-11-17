@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1794828204 source:/Users/mateoymargui/Documents/GitHub/sonus/main.c
+1794917550 source:/Users/mateoymargui/Documents/GitHub/sonus/main.c
 	<stdio.h>
 	<stdlib.h>
 	"registro.h"
@@ -33,10 +33,10 @@
 	<ctype.h>
 	"registro.h"
 
-1794869411 /Users/mateoymargui/Documents/GitHub/sonus/login.h
+1794918728 /Users/mateoymargui/Documents/GitHub/sonus/login.h
 	"registro.h"
 
-1794882812 source:/Users/mateoymargui/Documents/GitHub/sonus/login.c
+1794919099 source:/Users/mateoymargui/Documents/GitHub/sonus/login.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -44,6 +44,7 @@
 	"registro.h"
 	"extras.h"
 	"artista.h"
+	"usuario.h"
 
 1794884410 source:d:\gonza\documentos\github\sonus\main.c
 	<stdio.h>
@@ -91,7 +92,7 @@
 
 1794828204 /Users/mateoymargui/Documents/GitHub/sonus/extras.h
 
-1794873698 source:/Users/mateoymargui/Documents/GitHub/sonus/registro.c
+1794918628 source:/Users/mateoymargui/Documents/GitHub/sonus/registro.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -108,9 +109,9 @@
 	"artista.h"
 	"usuario.h"
 
-1794883441 /Users/mateoymargui/Documents/GitHub/sonus/artista.h
+1794920086 /Users/mateoymargui/Documents/GitHub/sonus/artista.h
 
-1794872034 /Users/mateoymargui/Documents/GitHub/sonus/usuario.h
+1794918728 /Users/mateoymargui/Documents/GitHub/sonus/usuario.h
 
 1794883744 source:d:\gonza\documentos\github\sonus\artista.c
 	<stdio.h>

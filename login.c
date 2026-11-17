@@ -22,7 +22,7 @@ int menuLogin() {
         switch(option) {
 
         case 1:
-
+            {
             char nickName[30];
             inicioSesionUsuario(&nickName);
             if(nickName[0] == '\0')
@@ -32,8 +32,9 @@ int menuLogin() {
             }
             menu_usuario(nickName);
             return 1; // los return son para que vuelva al menu anterior
-
+            }
         case 2:
+            {
             int id_log=-1;
             inicioSesionArtista(&id_log);
             if(id_log==-1)
@@ -43,9 +44,12 @@ int menuLogin() {
             }
             menu_artista(id_log);
             return 1;
-
+            }
         default:
+            {
             return 0;
+            }
+
         }
     }
 }
@@ -96,7 +100,7 @@ int verificarContraseniaUsuario(char filename[], char contrasenia[], char nickna
 }
 
 
-void inicioSesionUsuario(char *nickname[30]) {
+void inicioSesionUsuario(char *nickname) {
     char contrasenia[20];
     FILE *buffer = fopen("usuarios.bin", "rb");
     limpiarConsola();
@@ -112,12 +116,12 @@ void inicioSesionUsuario(char *nickname[30]) {
     do {
         printf("Ingrese su nickname (Usuario): ");
         scanf("%s", nickname);
-    } while(verificarUsuarioExiste("usuarios.bin", *nickname) == 0);
+    } while(verificarUsuarioExiste("usuarios.bin", nickname) == 0);
 
     do {
         printf("Ingrese la contrasenia: ");
         scanf("%s", contrasenia);
-    } while(verificarContraseniaUsuario("usuarios.bin", contrasenia, *nickname) == 0);
+    } while(verificarContraseniaUsuario("usuarios.bin", contrasenia, nickname) == 0);
 
     fclose(buffer);
 }
@@ -170,7 +174,7 @@ void inicioSesionArtista(int* id_log) {
     char nickname[30];
     char contrasenia[20];
 
-    FILE *buffer = fopen("artistas.bin", "rb");
+    FILE *buffer = fopen("Artistas.dat", "rb");
     limpiarConsola();
     if (!buffer) {
         printf("ERROR: No se pudo abrir el archivo.\n");
@@ -183,12 +187,12 @@ void inicioSesionArtista(int* id_log) {
     do {
         printf("Ingrese su nickname (Artista): ");
         scanf("%s", nickname);
-    } while(verificarArtistaExiste("artistas.bin", nickname) == 0);
+    } while(verificarArtistaExiste("Artistas.dat", nickname) == 0);
 
     do {
         printf("Ingrese la contrasenia: ");
         scanf("%s", contrasenia);
-    } while(verificarContraseniaArtista("artistas.bin", contrasenia, nickname) == 0);
+    } while(verificarContraseniaArtista("Artistas.dat", contrasenia, nickname) == 0);
 
     int id_encontrado=buscar_id_artista(nickname);
 

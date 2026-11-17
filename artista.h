@@ -35,6 +35,7 @@ int modificar_cancion_archivo(int id_ing);
 int buscar_cancion_ID(int id_ing, int id_logeado);
 void mostrar_canciones_logeado(int id_logeado);
 //-------NUEVA CANCION------------//
+int sumar_cancion_album(int id_ingresado);
 int pasar_archivo_cancion(Cancion c);
 int agregar_cancion(Cancion* c, int id_Artista_ing);
 int buscar_id_album(int id_ingresado);

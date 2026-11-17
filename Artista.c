@@ -666,7 +666,42 @@ int agregar_cancion(Cancion* c, int id_Artista_ing)
 
     printf("La ID de su cancion es: %i \n", c->idCancion);
 
+    if(sumar_cancion_album(id_ingresado)!=1)
+    {
+        printf("ERROR AL MODIFICAR EL ALBUM.\n");
+        return -1;
+    }
+
     return 1;
+}
+int sumar_cancion_album(int id_ingresado)
+{
+    FILE*archivo=fopen("Albumes.dat","rb+");
+
+    if(!archivo)
+        return -1;
+
+    Album aux;
+    while(fread(&aux,sizeof(Album),1,archivo)==1)
+    {
+        if(aux.idAlbum==id_ingresado)
+        {
+            if(fseek(archivo,-(long)sizeof(Album),SEEK_CUR)==0)
+            {
+             aux.cantidadCanciones++;
+                if(fwrite(&aux,sizeof(Album),1,archivo)==1)
+                {
+                    printf("Agregado al album con exito!\n");
+                    fclose(archivo);
+                    return 1;
+                }
+            }
+
+        }
+    }
+
+   fclose(archivo);
+   return -1;
 }
 int buscar_id_album(int id_ingresado)
 {
