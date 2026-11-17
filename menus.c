@@ -284,9 +284,9 @@ void menu_usuario(char nickNameUsuario[])
 
         }
     }
+}
 
-void menu_artista(int id_Artista_ing)
-{
+void menu_artista(int id_Artista_ing) {
     int opcion=-1;
     while(opcion!=0)
     {
@@ -483,8 +483,7 @@ void menu_reportes()
         printf("3. Artista Mas Calificado\n");
         printf("4. Usuario Mas Activo\n");
         printf("0. Salir\n");
-        printf("-----------------------------\n");
-        printf("Ingrese opcion: ");
+        printf("\nIngrese una opcion: ");
         scanf("%d", &opcion);
         switch(opcion)
         {
@@ -582,8 +581,6 @@ void menu_reportes()
                 break;
             }
         }
-
-
     } while(opcion != 0);
 }
 
